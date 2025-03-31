@@ -213,7 +213,7 @@ Http Status - 200 (OK)
 {
     code: "SU",
     message: "Succese",
-    relativeWordList: String[]
+    relativeWordList: string[]
 }
 
 실패
@@ -228,6 +228,36 @@ Http Status - 500 (Internal Server Error)
 ==================================================================
 
 boardDetail(게시물 상세보기)
+
+성공
+Http Status - 200 (OK)
+{
+    code: "SU",
+    message: "Succese",
+    
+    boardNumber: int,
+    title: string,
+    content: string,
+    boardImage: string[],
+    writeDateTime: string,
+    writerNickname: string,
+    writerProfileImage: string,
+}
+
+실패
+- 존재하지 않는 게시물
+Http Status - 400 (Bad Request)
+{
+    code : "NB",
+    message : "Not Existed Board Number."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE"
+    message : "Database Error."
+}
 
 ==================================================================
 
