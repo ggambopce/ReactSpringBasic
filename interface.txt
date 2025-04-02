@@ -1,4 +1,6 @@
 signIn(로그인)
+- URL
+POST /api/v1/auth/sign-in
 
 - request
 {
@@ -33,6 +35,9 @@ Http Status - 500 (Internal Server Error)
 ==================================================================
 
 signUp(회원가입)
+
+- URL
+POST /api/v1/auth/sign-up
 
 - request
 {
@@ -75,6 +80,10 @@ Http Status - 500 (Internal Server Error)
 
 WeeklyTop3List(주간 상위 3 게시물)
 
+- URL
+/api/v1/board/top-3
+
+
 - response
 
 성공
@@ -110,6 +119,10 @@ Http Status - 500 (Internal Server Error)
 ==================================================================
 
 currentList(최신 게시물 리스트)
+
+- URL
+GET /api/v1/board/current-list/{pageNumber}
+
 
 - response
 
@@ -147,6 +160,9 @@ Http Status - 500 (Internal Server Error)
 
 popularWordList(인기 검색어 리스트)
 
+- URL
+GET /api/v1/search/popular-list
+
 - response
 
 성공
@@ -169,6 +185,9 @@ Http Status - 500 (Internal Server Error)
 ==================================================================
 
 searchList (검색 게시물 리스트)
+
+- URL
+GET /api/v1/board/search-list/{searchWord}
 
 - response
 
@@ -206,6 +225,9 @@ Http Status - 500 (Internal Server Error)
 
 relativeWordList(관련 검색어 리스트)
 
+- URL
+GET /api/v1/search/{searchWord}/relation-list
+
 - response
 
 성공
@@ -228,6 +250,9 @@ Http Status - 500 (Internal Server Error)
 ==================================================================
 
 boardDetail(게시물 상세보기)
+
+- URL
+GET/api/v1/board/{boardNumber}
 
 - response
 
@@ -265,6 +290,10 @@ Http Status - 500 (Internal Server Error)
 
 favoriteList(좋아요 리스트)
 
+- URL
+GET /api/v1/board/{boardNumber}/favorite-list
+
+
 - response
 
 성공
@@ -291,6 +320,12 @@ Http Status - 500 (Internal Server Error)
 ==================================================================
 
 putFavorite(좋아요 기능)
+
+- URL
+PUT /api/v1/board/{boardNumber}/favorite
+
+- Header
+Authorization : Bearer Token
  
 - request
 
@@ -318,6 +353,9 @@ Http Status - 500 (Internal Server Error)
 ==================================================================
 
 commentList(댓글 리스트)
+
+- URL
+GET /api/v1/board/{boardNumber}/comment-list
 
 - response
 
@@ -389,6 +427,12 @@ Http Status - 500 (Internal Server Error)
 
 boardDelete(게시물 삭제)
 
+- URL
+DELETE /api/v1/board/{boardNumber}
+
+- Header
+Authorization : Bearer Token
+
 - response
 
 성공
@@ -431,6 +475,12 @@ Http Status - 500 (Internal Server Error)
 
 boardWrite(게시물 쓰기)
 
+- URL
+POST /api/v1/board/
+
+- Header
+Authorization : Bearer Token
+
 - request
 
 {
@@ -467,6 +517,12 @@ Http Status - 500 (Internal Server Error)
 ==================================================================
 
 boardUpdate(게시물 수정)
+
+- URL
+PATCH /api/v1/board/{boardNumber}
+
+- Header
+Authorization : Bearer Token
 
 - request
 
@@ -518,6 +574,9 @@ Http Status - 500 (Internal Server Error)
 
 getUser(유저 정보)
 
+- URL
+GET /api/v1/user/{email}
+
 - response
 
 성공
@@ -550,7 +609,52 @@ Http Status - 500 (Internal Server Error)
 
 ==================================================================
 
+getLoginedUser (로그인 된 유저 정보)
+
+- URL
+GET /api/v1/user/{email}
+
+- Header
+Authorization : Bearer Token
+
+- response
+
+성공
+Http Status - 200 (OK)
+{
+    code: "SU",
+    message: "Succese",
+    email: string,
+    nickname: string,
+    profileImage: string,
+}
+
+실패
+
+- 존재 하지 않는 유저
+Http Status - 400 (Bad Request )
+{
+    code : "NU"
+    message : "Not Existed User."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE"
+    message : "Database Error."
+}
+
+
+
+==================================================================
+
+
 userBoardList(특정 유저 게시물 리스트)
+
+- URL
+GET /api/v1/board/user-board-list/{email}
+
 
 - response
 
@@ -588,6 +692,13 @@ Http Status - 500 (Internal Server Error)
 
 patchNickname(닉네임 수정)
 
+- URL
+PATCH /api/v1/user/nickname
+
+- Header
+Authorization : Bearer Token
+
+
 - request
 {
     nickname: string,
@@ -621,9 +732,15 @@ Http Status - 500 (Internal Server Error)
 
 patchProfileImage(프로필 이미지 수정)
 
+- URL
+PATCH /api/v1/user/profile-image
+
+- Header
+Authorization : Bearer Token
+
 - request
 {
-    profileImage: string,
+    *profileImage: string | null,
 }
 
 - response
