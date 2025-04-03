@@ -90,6 +90,7 @@ WeeklyTop3List(주간 상위 3 게시물)
 Http Status - 200 (OK)
 {
     code: "SU",
+    
     message: "Succese",
     top3List: BoardListItem[]
 }
