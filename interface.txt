@@ -28,7 +28,7 @@ Http Status - 401 (Unauthorized)
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
@@ -65,14 +65,14 @@ Http Status - 200 (OK)
 - 이메일 중복
 Http Status - 400 (Bad Request)
 {
-    code : "EE",
-    message : "Existed Email."
+    code : "DE",
+    message : "Duplicate Email."
 }
 
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
@@ -113,7 +113,7 @@ BoardListItem
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
@@ -153,7 +153,7 @@ BoardListItem
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
@@ -178,7 +178,7 @@ Http Status - 200 (OK)
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
@@ -243,7 +243,7 @@ Http Status - 200 (OK)
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
@@ -283,7 +283,7 @@ Http Status - 400 (Bad Request)
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
@@ -314,7 +314,7 @@ FavoriteListItem {
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
@@ -347,7 +347,7 @@ Http Status - 200 (OK)
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
@@ -380,7 +380,7 @@ CommentListItem {
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
  
@@ -414,13 +414,27 @@ Http Status - 400 (Bad Request )
 Http Status - 400 (Bad Request )
 {
     code : "NU"
-    message : "Not Existed User."
+    message : "This user not exist."
+}
+
+- 인증 실패
+Http Status - 401 (Unauthorized)
+{
+    code : "AF"
+    message : "Authorization Failed."
+}
+
+- 권한 없음
+Http Status - 403 (Forbidden)
+{
+    code : "NP"
+    message : "Do not have permission."
 }
 
 - 데이터베이스 에러
 Http Status - 500 (Internal Server Error)
 {
-    code : "DE"
+    code : "DBE"
     message : "Database Error."
 }
 
