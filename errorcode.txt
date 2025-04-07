@@ -17,4 +17,4 @@
 - 권한 없음 : "NP" / "Do not have permission."
 
 500
-- 데이터베이스 에러 : "DBE" / "Database error"
+- 데이터베이스 에러 : "DBE" / "Database error."
