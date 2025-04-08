@@ -13,8 +13,8 @@ export default function BoardListItem() {
                         <div className='board-list-item-profile-image' style={{backgroundImage:'url(https://fastly.picsum.photos/id/841/200/200.jpg?hmac=jAPzaXgN_B37gVuIQvmtuRCmYEC0lJP86OZexH1yam4)'}}></div>
                     </div>
                     <div className='board-list-item-write-box'>
-                        <div className='board-list-item-nickname'>{'안녕하세요 나는 JINO입니다'}</div>
-                        <div className='board-list-item-write-datetime'>{'2025.04.05'}</div>
+                        <div className='board-list-item-nickname'>{'안녕하세요 나는 JINO'}</div>
+                        <div className='board-list-item-write-date'>{'2025.04.05'}</div>
                     </div>
                 </div>
                 <div className='board-list-item-middle'>
