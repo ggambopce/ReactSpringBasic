@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
 import BoardListItem from 'components/BoardListItem';
+import { latesBoardListMock } from 'mocks';
 
 function App() {
   return (
     <>
-      <BoardListItem />
+      {latesBoardListMock.map(boardListItem => <BoardListItem boardListItem={boardListItem} />)}
+      
     </>
   );
 }
