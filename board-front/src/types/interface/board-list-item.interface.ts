@@ -1,4 +1,4 @@
-export default interface BoardListItem {
+export default interface BoardListItemType {
     boardNumber: number;
     title: string;
     content: string;

@@ -1,4 +1,4 @@
-export default interface CommentListItem {
+export default interface CommentListItemType {
     nickname: string;
     profileImage: string | null;
     writeDatetime: string;
