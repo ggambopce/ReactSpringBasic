@@ -1,16 +1,14 @@
 import React from 'react';
 import './App.css';
 import BoardListItem from 'components/boardListItem';
-import { latesBoardListMock } from 'mocks';
+import { latesBoardListMock, top3BoardListMock } from 'mocks';
 import Top3Item from 'components/top3Item';
 
 function App() {
   return (
     <>
       <div style= {{ display: 'flex', justifyContent: 'center', gap: '24px' }}>
-        <Top3Item />
-        <Top3Item />
-        <Top3Item />
+        {top3BoardListMock.map(top3ListItem => <Top3Item top3ListItem={top3ListItem}/>)}  
       </div>
       
     </>
