@@ -7,7 +7,7 @@ import BoardListItemType from 'types/interface/board-list-item.interface';
 interface Props {
     boardListItem: BoardListItemType
 }
-//          componet: Board List Item 컴포넌트          //
+//          component: Board List Item 컴포넌트          //
 export default function BoardListItem({ boardListItem}: Props) {
 
     //          properties          //
