@@ -17,8 +17,13 @@ export default function Top3Item() {
                         <div className='top-3-list-item-write-date'>{"2025.04.04."}</div>
                     </div>
                 </div>
-                <div className='top-3-list-item-middle'></div>
-                <div className='top-3-list-item-bottom'></div>
+                <div className='top-3-list-item-middle'>
+                    <div className='top-3-list-item-title'>{"오늘 공부한 것은 JAVA입니다"}</div>
+                    <div className='top-3-list-item-content'>{"제네릭(Generic)은 자바와 같은 언어에서 데이터 타입을 일반화할 수 있는 방법을 제공하는 기능이다. 제네릭을 사용하면..."}</div>
+                </div>
+                <div className='top-3-list-item-bottom'>
+                    <div className='top-3-list-item-counts'>{'댓글 0  좋아요 0 조회수 0'}</div>
+                </div>
             </div>
         </div>
   )
