@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
-import BoardListItem from 'components/boardListItem';
-import { latesBoardListMock, top3BoardListMock } from 'mocks';
+import { top3BoardListMock } from 'mocks';
 import Top3Item from 'components/top3Item';
 
 function App() {
