@@ -19,3 +19,5 @@ const InputBox = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
         </div>
         )
 })
+
+export default InputBox
