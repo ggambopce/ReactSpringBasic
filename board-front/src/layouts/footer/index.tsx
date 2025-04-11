@@ -4,8 +4,19 @@ import './style.css';
 
 //          component: Footer 레이아웃          //
 export default function Footer() {
+
+    //          event handler: jinorandb 아이콘 버튼 클릭 이벤트 처리           //
+    const onRandbIconButtonClickHandler = () => {
+        window.open('https://jinorandb.com');
+    }
+
+    //          event handler: youtube 아이콘 버튼 클릭 이벤트 처리          //
+    const onYoutubeIconButtonClickHandler = () => {
+        window.open('https://www.youtube.com/@ggambopce');
+    }
+
   
-  //            render: Footer 랜더링           //
+    //            render: Footer 랜더링           //
     return (
     <div id='footer'>
         <div className='footer-container'>
@@ -18,10 +29,10 @@ export default function Footer() {
                 </div>
                 <div className='footer-link-box'>
                     <div className='footer-email-link'>{'ggambopce@gmail.com'}</div>
-                    <div className='icon-button'>
+                    <div className='icon-button' onClick={onRandbIconButtonClickHandler}>
                         <div className='icon randb-icon'></div>
                     </div>
-                    <div className='icon-button'>
+                    <div className='icon-button' onClick={onYoutubeIconButtonClickHandler}>
                         <div className='icon youtube-icon'></div>
                     </div>
                 </div>
