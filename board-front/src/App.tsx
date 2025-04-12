@@ -23,6 +23,9 @@ function App() {
   return (
     <>
       <Routes>
+        <Route>
+          <Header />
+        </Route>
         <Route path='/' element={ <Main /> } />
         <Route path='/auth' element={ <Authentication />}/>
         <Route path='/search/:word' element={ <Search />}/>
