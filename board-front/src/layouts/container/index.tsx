@@ -1,3 +1,4 @@
+import { AUTH_PATH } from 'constant';
 import Footer from 'layouts/footer'
 import Header from 'layouts/header'
 import { Outlet, useLocation } from 'react-router-dom'
@@ -15,7 +16,7 @@ export default function Container() {
         
         <Header />
         <Outlet />
-        {pathname !== '/auth' && <Footer />}
+        {pathname !== AUTH_PATH() && <Footer />}
     </>
   )
 }
