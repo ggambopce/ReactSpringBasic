@@ -1,4 +1,3 @@
-import Footer from 'layouts/footer';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Main from 'views/Main';
@@ -8,6 +7,7 @@ import User from 'views/User';
 import BoardDetail from 'views/Board/Detail';
 import BoardWrite from 'views/Board/Write';
 import BoardUpdate from 'views/Board/Update';
+import Container from 'layouts/container';
 
 //      component: Application 컴포넌트     //
 function App() {
@@ -23,18 +23,18 @@ function App() {
   return (
     <>
       <Routes>
-        <Route>
-          <Header />
-        </Route>
-        <Route path='/' element={ <Main /> } />
-        <Route path='/auth' element={ <Authentication />}/>
-        <Route path='/search/:word' element={ <Search />}/>
-        <Route path='/user/:userEmail' element={ <User />}/>
-        <Route path='/board'>
-          <Route path='write' element={ <BoardWrite />}/>
-          <Route path='detail/:boardNumber' element={ <BoardDetail />}/> 
-          <Route path='update/:boardNumber' element={ <BoardUpdate />}/>
-        </Route>
+        <Route element={<Container />}>
+          <Route path='/' element={ <Main /> } />
+          <Route path='/auth' element={ <Authentication />}/>
+          <Route path='/search/:word' element={ <Search />}/>
+          <Route path='/user/:userEmail' element={ <User />}/>
+          <Route path='/board'>
+            <Route path='write' element={ <BoardWrite />}/>
+            <Route path='detail/:boardNumber' element={ <BoardDetail />}/> 
+            <Route path='update/:boardNumber' element={ <BoardUpdate />}/>
+          </Route>
+        </Route> 
+        
       </Routes>
     </>
   );
