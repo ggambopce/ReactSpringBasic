@@ -87,7 +87,10 @@ export default function Header() {
     }
 
     //          component: 로그인 또는 마이페이지 버튼 컴포넌트          //
-    const LoginMyPageButton = () => {
+    const MyPageButton = () => {
+
+        //          state: userEmail path variable 상태         //
+        const { userEmail} = useParams();
 
         //          event handler:  마이페이지 버튼 클릭 이벤트 처리 함수           //
         const onMyPageButtonClickHandler = () => {
@@ -95,13 +98,21 @@ export default function Header() {
             const {email} = loginUser;
             navigator(USER_PATH(email));
         };
+        //          event handler:  로그아웃 버튼 클릭 이벤트 처리 함수           //
+        const onSignOutButtonClickHandler = () => {
+            resetLoginUser();
+            navigator(MAIN_PATH());
+        };
         //          event handler:  로그인 버튼 클릭 이벤트 처리 함수           //
         const onSignInButtonClickHandler = () => {
             navigator(AUTH_PATH());
         };
 
-        if (isLogin)
+        //          render: 로그아웃 버튼 컴포넌트 렌더링         //
+        if (isLogin && userEmail === loginUser?.email)
+        return <div className='white-button' onClick={onSignOutButtonClickHandler}>{'로그아웃'}</div>;
         //          render: 마이페이지 버튼 컴포넌트 렌더링         //
+        if (isLogin)
         return <div className='white-button' onClick={onMyPageButtonClickHandler}>{'마이페이지'}</div>;
         //          render: 로그인 버튼 컴포넌트 렌더링         //
         return <div className='black-button' onClick={onSignInButtonClickHandler}>{'로그인'}</div>;
@@ -120,7 +131,7 @@ export default function Header() {
             </div>
             <div className='header-right-box'>
                 <SearchButton />
-                <LoginMyPageButton />
+                <MyPageButton />
             </div>
         </div>
     </div>
