@@ -58,13 +58,13 @@ export default function Header() {
     
 
         if (!status)
-        //          render: 검색 버튼 컴포넌트 (클릭 false 상태)           //
+        //          render: 검색 버튼 컴포넌트 랜더링 (클릭 false 상태)           //
         return (
             <div className='icon-button' onClick={onSearchButtonClickHandler}>
                 <div className='icon search-light-icon'></div>
             </div>
         );
-         //          render: 검색 버튼 컴포넌트 (클릭 true 상태)           //
+         //          render: 검색 버튼 컴포넌트 랜더링 (클릭 true 상태)           //
          return (
             <div className='header-search-input-box'>
                 <input className='header-search-input' type='text' placeholder='검색어를 입력해주세요.' value={word} onChange={onSearchWordChangeHandler} onKeyDown={onSearchWordKeyDownHandler} />
@@ -73,8 +73,14 @@ export default function Header() {
                 </div>
             </div>
          )
-
     }
+
+    //          component: 로그인 또는 마이페이지 버튼 컴포넌트          //
+    const LoginMyPageButton = () => {
+
+        return <div className='black-button'>{'로그인'}</div>
+    }
+
     //          render: Header 레이아웃 렌더링          //
     return (
     <div id='header'>
@@ -87,6 +93,7 @@ export default function Header() {
             </div>
             <div className='header-right-box'>
                 <SearchButton />
+                <LoginMyPageButton />
             </div>
         </div>
     </div>
