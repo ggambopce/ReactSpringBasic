@@ -3,7 +3,7 @@ import './style.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AUTH_PATH, MAIN_PATH, SEARCH_PATH, USER_PATH } from 'constant';
 import { useCookies } from 'react-cookie';
-import { useLoginUserStore } from 'stores';
+import { useBoardStore, useLoginUserStore } from 'stores';
 
 
 //          component: Header 레이아웃          //
@@ -86,7 +86,7 @@ export default function Header() {
          )
     }
 
-    //          component: 로그인 또는 마이페이지 버튼 컴포넌트          //
+    //          component: 마이페이지 버튼 컴포넌트          //
     const MyPageButton = () => {
 
         //          state: userEmail path variable 상태         //
@@ -118,6 +118,26 @@ export default function Header() {
         return <div className='black-button' onClick={onSignInButtonClickHandler}>{'로그인'}</div>;
     };
 
+    //          component: 업로드 버튼 컴포넌트           //
+    const UploadButton = () => {
+
+        //          state: 게시물 상태          //
+        const { title, content, boardImageFileList, resetBoard} = useBoardStore();
+
+        //          event handler: 업로드 버튼 클릭 이벤트 처리 함수            //
+        const onUploadButtonClickHandler = () => {
+
+        }
+
+        //          render: 업로드 버튼 컴포넌트 렌더링         //
+        if (title && content)
+        return <div className='black-button' onClick={onUploadButtonClickHandler}>{'업로드'}</div>
+        //          render: 업로드 불가 버튼 컴포넌트 렌더링         //
+        return <div className='disable-button' >{'업로드'}</div>
+        
+    }
+
+
     //          render: Header 레이아웃 렌더링          //
     return (
     <div id='header'>
@@ -131,6 +151,7 @@ export default function Header() {
             <div className='header-right-box'>
                 <SearchButton />
                 <MyPageButton />
+                <UploadButton />
             </div>
         </div>
     </div>
