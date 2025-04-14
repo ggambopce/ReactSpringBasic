@@ -116,8 +116,7 @@ export default function Header() {
         return <div className='white-button' onClick={onMyPageButtonClickHandler}>{'마이페이지'}</div>;
         //          render: 로그인 버튼 컴포넌트 렌더링         //
         return <div className='black-button' onClick={onSignInButtonClickHandler}>{'로그인'}</div>;
-
-    }
+    };
 
     //          render: Header 레이아웃 렌더링          //
     return (
