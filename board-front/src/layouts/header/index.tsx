@@ -3,11 +3,14 @@ import './style.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AUTH_PATH, MAIN_PATH, SEARCH_PATH, USER_PATH } from 'constant';
 import { useCookies } from 'react-cookie';
+import { useLoginUserStore } from 'stores';
 
 
 //          component: Header 레이아웃          //
 export default function Header() {
 
+    //          state: 로그인 유저 상태         //
+    const {loginUser, setLoginUser, resetLoginUser} = useLoginUserStore();
     //          state: cookie 상태          //
     const [cookies, setCookie] = useCookies();
     //          state: 로그인 상태          //
@@ -88,7 +91,9 @@ export default function Header() {
 
         //          event handler:  마이페이지 버튼 클릭 이벤트 처리 함수           //
         const onMyPageButtonClickHandler = () => {
-            navigator(USER_PATH(''));
+            if (!loginUser) return;
+            const {email} = loginUser;
+            navigator(USER_PATH(email));
         };
         //          event handler:  로그인 버튼 클릭 이벤트 처리 함수           //
         const onSignInButtonClickHandler = () => {
