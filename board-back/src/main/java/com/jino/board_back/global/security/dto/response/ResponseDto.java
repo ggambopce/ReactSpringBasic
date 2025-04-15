@@ -1,7 +1,5 @@
 package com.jino.board_back.global.security.dto.response;
 
-import java.net.ResponseCache;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
