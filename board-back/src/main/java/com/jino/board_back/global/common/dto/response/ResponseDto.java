@@ -1,16 +1,18 @@
-package com.jino.board_back.global.security.dto.response;
+package com.jino.board_back.global.common.dto.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.jino.board_back.global.security.common.ResponseCode;
-import com.jino.board_back.global.security.common.ResponseMessage;
+import com.jino.board_back.global.common.ResponseCode;
+import com.jino.board_back.global.common.ResponseMessage;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ResponseDto {
 
     private String code;

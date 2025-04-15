@@ -1,4 +1,4 @@
-package com.jino.board_back.global.security.common;
+package com.jino.board_back.global.common;
 
 public interface ResponseCode {
 
