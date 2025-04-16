@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.jino.board_back.global.common.ResponseCode;
 import com.jino.board_back.global.common.ResponseMessage;
-import com.jino.board_back.global.common.dto.response.ResponseDto;
+import com.jino.board_back.global.dto.response.ResponseDto;
 
 import lombok.Getter;
 

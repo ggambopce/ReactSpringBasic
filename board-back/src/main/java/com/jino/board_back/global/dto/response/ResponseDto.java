@@ -1,4 +1,4 @@
-package com.jino.board_back.global.common.dto.response;
+package com.jino.board_back.global.dto.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
