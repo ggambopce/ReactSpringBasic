@@ -24,4 +24,4 @@ spring:
       max-file-size: 100MB
       max-request-size: 110MB
 
-secret-key: SecretK3y
+secret-key: Q8eCrA0RZ/9IvQY5mZCfh9Mu+LC7RJGUm1S8qkFllYQ=

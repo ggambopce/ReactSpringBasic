@@ -1,6 +1,10 @@
 package com.jino.board_back.global.security.provider;
 
+import java.util.Base64;
 import java.util.Date;
+
+import javax.crypto.SecretKey;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -10,40 +14,42 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtProvider {
 
-    @Value("${secret-key}")
-    private String secretKey;
+    private final SecretKey key;
 
-    // JWT 생성메서드
-    public String create(String email) {
-
-        Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
-
-        String jwt = Jwts.builder()
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .setSubject(email).setIssuedAt(new Date()).setExpiration(expiredDate)
-                .compact();
-
-        return jwt;
+    public JwtProvider(@Value("${secret-key}") String base64EncodedKey) {
+        byte[] keyBytes = Base64.getDecoder().decode(base64EncodedKey); // Base64 디코딩
+        this.key = Keys.hmacShaKeyFor(keyBytes); // HS256에 적합한 SecretKey 생성
     }
 
-    // JWT 검증, JWT에서 정보 추출 메서드
+    public String create(String email) {
+        Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
+
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(expiredDate)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
     public String validate(String jwt) {
-
-        Claims claims = null;
-
         try {
-            claims = Jwts.parser().setSigningKey(secretKey)
-                    .parseClaimsJws(jwt).getBody();
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(jwt)
+                    .getBody();
+
+            return claims.getSubject();
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
         }
-
-        return claims.getSubject();
     }
 
 }
