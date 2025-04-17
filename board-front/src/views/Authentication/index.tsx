@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './style.css'
+import InputBox from 'components/inputBox';
 
 //          component: 인증 화면 컴포넌트           //
 export default function Authentication() {
@@ -12,7 +13,16 @@ export default function Authentication() {
 
       //          render: sign in 컴포넌트 랜더링           //
       return (
-        <div className='auth-card'></div>
+        <div className='auth-card'>
+          <div className='auth-card-box'>
+            <div className='auth-card-top'>
+              <div className='auth-card-title-box'></div>
+              <InputBox />
+              <InputBox />
+            </div>
+            <div className='auth-card-bottom'></div>
+          </div>
+        </div>
       )
     }
 
@@ -21,7 +31,9 @@ export default function Authentication() {
 
       //          render: sign up 컴포넌트 랜더링           //
       return (
-        <div className='auth-card'></div>
+        <div className='auth-card'>
+
+        </div>
       )
     }
 
