@@ -30,7 +30,10 @@ export default function Authentication() {
 
       //          event handler: 로그인 버튼 클릭 이벤트 처리         //
       const onSignInButtonClickHandler = () => {
-
+      }
+      //          event handler: 회원가입 링크 클릭 이벤트 처리           //
+      const onSignUpButtonClickHandler = () => {
+        setView('sign-up')
       }
       //          event handler: 패스워드 버튼 클릭 이벤트 처리           //
       const onPasswordButtonClickHandler = () => {
@@ -75,7 +78,7 @@ export default function Authentication() {
               </div>
               <div className='black-large-full-button' onClick={onSignInButtonClickHandler}>{'로그인'}</div>
               <div className='auth-description-box'>
-                <div className='auth-description'>{'신규 사용자이신가요?'} <span className='auth-description-link'>{'회원 가입'}</span></div>
+                <div className='auth-description'>{'신규 사용자이신가요?'} <span className='auth-description-link' onClick={onSignUpButtonClickHandler}>{'회원 가입'}</span></div>
               </div>
             </div>
           </div>
