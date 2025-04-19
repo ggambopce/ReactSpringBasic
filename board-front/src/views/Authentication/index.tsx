@@ -147,7 +147,7 @@ export default function Authentication() {
       //          state: 닉네임 요소 참조 상태          //
       const nicknameRef = useRef<HTMLInputElement | null>(null);
       //          state: 전화번호 요소 참조 상태          //
-      const relNumberRef = useRef<HTMLInputElement | null>(null);
+      const telNumberRef = useRef<HTMLInputElement | null>(null);
       //          state: 주소 요소 참조 상태          //
       const addressRef = useRef<HTMLInputElement | null>(null);
       //          state: 상세 주소 요소 참조 상태          //
@@ -220,7 +220,6 @@ export default function Authentication() {
         setEmail(value);
         setEmailError(false);
         setEmailErrorMessage('');
-
       }
       //          event handler: 패스워드 변경 이벤트 처리          //
       const onPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -324,7 +323,7 @@ export default function Authentication() {
 
       //          event handler: 회원가입 버튼 클릭 이벤트 처리         //
       const onSignUpButtonClickHandler = () => {
-
+        alert('회원가입 버튼!')
       };
       //          event handler: 이메일 키 다운 이벤트 처리         //
       const onEmailKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -341,23 +340,31 @@ export default function Authentication() {
       //          event handler: 패스워드 확인 키 다운 이벤트 처리         //
       const onPasswordCheckKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key !== 'Enter') return;
+        if (!nicknameRef.current) return;
         onNextButtonClickHandler();
+        nicknameRef.current.focus();
       }
       //          event handler: 닉네임 키 다운 이벤트 처리         //
       const onNicknameKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key !== 'Enter') return;
+        if (!telNumberRef.current) return;
+        telNumberRef.current.focus();
       }
       //          event handler: 전화번호 키 다운 이벤트 처리         //
       const onTelNumberKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key !== 'Enter') return
+        onAddressButtonClickHandler();
       }
       //          event handler: 주소 키 다운 이벤트 처리         //
       const onAddressKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key !== 'Enter') return;
+        if (!addressDetailRef.current) return;
+        addressDetailRef.current.focus();
       }
       //          event handler: 상세주소 키 다운 이벤트 처리         //
       const onAddressDetailKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key !== 'Enter') return;
+        onSignUpButtonClickHandler();
       }
     
       //          render: sign up 컴포넌트 랜더링           //
@@ -379,7 +386,7 @@ export default function Authentication() {
               {page === 2 && (
                 <>
                 <InputBox ref={nicknameRef} label='닉네임*' type='text' placeholder='닉네임을 입력해주세요' value={nickname} onChange={onNicknameChangeHandler} error={isNicknameError} message={nicknameErrorMessage} onKeyDown={onNicknameKeyDownHandler} />
-                <InputBox ref={relNumberRef} label='전화 번호*' type='text' placeholder='전화 번호를 입력해주세요' value={telNumber} onChange={onTelNumberChangeHandler} error={isTelNumberError} message={telNumberErrorMessage} onKeyDown={onTelNumberKeyDownHandler} />
+                <InputBox ref={telNumberRef} label='전화 번호*' type='text' placeholder='전화 번호를 입력해주세요' value={telNumber} onChange={onTelNumberChangeHandler} error={isTelNumberError} message={telNumberErrorMessage} onKeyDown={onTelNumberKeyDownHandler} />
                 <InputBox ref={addressRef} label='주소*' type='text' placeholder='우편번호 찾기' value={address} onChange={onAddressChangeHandler} error={isAddressError} message={addressErrorMessage} icon='expand-right-light-icon' onButtonClick={onAddressButtonClickHandler} onKeyDown={onAddressKeyDownHandler} />
                 <InputBox ref={addressDetailRef} label='상세 주소' type='text' placeholder='상세 주소를 입력해주세요' value={addressDetail} onChange={onAddressDetailChangeHandler} error={false} onKeyDown={onAddressDetailKeyDownHandler} />
                 </>
