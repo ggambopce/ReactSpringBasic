@@ -218,36 +218,54 @@ export default function Authentication() {
       const onEmailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setEmail(value);
+        setEmailError(false);
+        setEmailErrorMessage('');
+
       }
       //          event handler: 패스워드 변경 이벤트 처리          //
       const onPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setPassword(value);
+        setPasswordError(false);
+        setPasswordErrorMessage('');
       }
-      //          event handler: 패스워드 변경 이벤트 처리          //
+      //          event handler: 패스워드 확인 변경 이벤트 처리          //
       const onPasswordCheckChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setPasswordCheck(value);
+        setPasswordCheckError(false);
+        setPasswordCheckErrorMessage('');
       }
       //          event handler: 닉네임 변경 이벤트 처리          //
       const onNicknameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setNickname(value);
+        setNicknameError(false);
+        setNicknameErrorMessage('');
       }
       //          event handler: 전화 번호 변경 이벤트 처리          //
       const onTelNumberChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setTelNumber(value);
+        setTelNumberError(false);
+        setTelNumberErrorMessage('');
       }
       //          event handler: 주소 변경 이벤트 처리          //
       const onAddressChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setAddress(value);
+        setAddressError(false);
+        setAddressErrorMessage('');
       }
       //          event handler: 상세주소 변경 이벤트 처리          //
       const onAddressDetailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setAddressDetail(value);
+      }
+      //          event handler: 개인 정보 동의 체크 박스 클릭 이벤트 처리          //
+      const onAgreedPersonalClickHandler = () => {
+        setAgreedPersonal(!agreedPersonal);
+        setAgreedPersonalError(false);
       }
 
       //          event handler: 패스워드 버튼 클릭 이벤트 처리          //
@@ -374,7 +392,7 @@ export default function Authentication() {
               {page === 2 && (
                 <>
                 <div className='auth-consent-box'>
-                  <div className='auth-check-box'>
+                  <div className='auth-check-box'onClick={onAgreedPersonalClickHandler}>
                     <div className={`icon ${agreedPersonal ? 'check-round-fill-icon' : 'check-ring-light-icon'}`}></div>
                   </div>
                   <div className= {isAgreedPersonalError ? 'auth-consent-title-error' : 'auth-consent-title'}>{'개인정보동의'}</div>
