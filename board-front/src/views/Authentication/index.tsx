@@ -219,6 +219,12 @@ export default function Authentication() {
         }
       }
 
+      //          event handler: 로그인 링크 클릭 이벤트 처리          //
+      const onSignInLinkClickHandler = () => {
+        setView('sign-in');
+      }
+
+
       //          event handler: 다음 단계 버튼 클릭 이벤트 처리          //
       const onNextButtonClickHandler= () => {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -267,14 +273,14 @@ export default function Authentication() {
                 <div className='auth-card-title'>{'회원가입'}</div>
                 <div className='auth-card-page'>{`${page}/2`}</div>
               </div>
-              <InputBox ref={emailRef} label='이메일 주소*' type='text' placeholder='이메일 주소를 입력해주세요.' value={email} onChange={onEmailChangeHandler} error={isEmailError} message={emailErrorMessage} />
-              <InputBox ref={passwordRef} label='비밀번호*' type={passwordType} placeholder='비밀번호를 입력해주세요.' value={password} onChange={onPasswordChangeHandler} error={isPasswordError} message={passwordErrorMessage} icon={passwordButtonIcon} onButtonClick={onPasswordButtonClickHandler} />
-              <InputBox ref={passwordCheckRef} label='비밀번호 확인*' type={passwordCheckType} placeholder='비밀번호를 다시 입력해주세요.' value={passwordCheck} onChange={onPasswordCheckChangeHandler} error={isPasswordCheckError} message={passwordCheckErrorMessage} icon={passwordCheckButtonIcon} onButtonClick={onPasswordCheckButtonClickHandler} />
+              <InputBox ref={emailRef} label='이메일 주소*' type='text' placeholder='이메일 주소를 입력해주세요.' value={email} onChange={onEmailChangeHandler} error={isEmailError} message={emailErrorMessage} onKeyDown={onEmailKeyDownHandler} />
+              <InputBox ref={passwordRef} label='비밀번호*' type={passwordType} placeholder='비밀번호를 입력해주세요.' value={password} onChange={onPasswordChangeHandler} error={isPasswordError} message={passwordErrorMessage} icon={passwordButtonIcon} onButtonClick={onPasswordButtonClickHandler} onKeyDown={onPasswordKeyDownHandler} />
+              <InputBox ref={passwordCheckRef} label='비밀번호 확인*' type={passwordCheckType} placeholder='비밀번호를 다시 입력해주세요.' value={passwordCheck} onChange={onPasswordCheckChangeHandler} error={isPasswordCheckError} message={passwordCheckErrorMessage} icon={passwordCheckButtonIcon} onButtonClick={onPasswordCheckButtonClickHandler} onKeyDown={onPasswordCheckKeyDownHandler} />
             </div>
             <div className='auth-card-bottom'>
               <div className='black-large-full-button' onClick={onNextButtonClickHandler}>{'다음 단계'}</div>
               <div className='auth-description-box'>
-                <div className='auth-description'>{'이미 계정이 있으신가요?'}<span className='auth-description-link'>{'로그인'}</span></div>
+                <div className='auth-description'>{'이미 계정이 있으신가요? '}<span className='auth-description-link' onClick={onSignInLinkClickHandler} >{'로그인'}</span></div>
               </div>
             </div>
 
