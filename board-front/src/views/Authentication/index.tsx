@@ -169,6 +169,8 @@ export default function Authentication() {
       const [address, setAddress] = useState<string>('');
       //          state: 상세 주소 상태           //
       const [addressDetail, setAddressDetail] = useState<string>('');
+      //          state: 개인 정보 동의 상태          //
+      const [agreedPersonal, setAgreedPersonal] = useState<boolean>(false);
       
 
       //          state: 패스워드 타입 상태          //
@@ -188,6 +190,9 @@ export default function Authentication() {
       const [isTelNumberError, setTelNumberError] = useState<boolean>(false);
       //          state: 주소 에러 상태         //
       const [isAddressError, setAddressError] = useState<boolean>(false);
+      //          state: 개인 정보 동의 에러 상태         //
+      const [isAgreedPersonalError, setAgreedPersonalError] = useState<boolean>(false);
+
 
       //          state: 이메일 에러 메세지 상태          //
       const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
@@ -370,10 +375,10 @@ export default function Authentication() {
                 <>
                 <div className='auth-consent-box'>
                   <div className='auth-check-box'>
-                    <div className='check-ring-light-icon'></div>
+                    {agreedPersonal ?  <div className='check-round-fill-icon'></div> : <div className='check-ring-light-icon'></div>}
                   </div>
-                  <div className='auth-consent-title'>{'개인정보동의'}</div>
-                  <div className='auth-consent-link'></div>
+                  <div className= {isAgreedPersonalError ? 'auth-consent-title-error' : 'auth-consent-title'}>{'개인정보동의'}</div>
+                  <div className='auth-consent-link'>{'더보기'}</div>
                 </div>
                 <div className='black-large-full-button' onClick={onSignUpButtonClickHandler}>{'회원 가입'}</div>
                 </>
