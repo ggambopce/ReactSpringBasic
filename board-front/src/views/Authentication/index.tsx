@@ -375,10 +375,10 @@ export default function Authentication() {
                 <>
                 <div className='auth-consent-box'>
                   <div className='auth-check-box'>
-                    {agreedPersonal ?  <div className='check-round-fill-icon'></div> : <div className='check-ring-light-icon'></div>}
+                    <div className={`icon ${agreedPersonal ? 'check-round-fill-icon' : 'check-ring-light-icon'}`}></div>
                   </div>
                   <div className= {isAgreedPersonalError ? 'auth-consent-title-error' : 'auth-consent-title'}>{'개인정보동의'}</div>
-                  <div className='auth-consent-link'>{'더보기'}</div>
+                  <div className='auth-consent-link'>{'더보기 >'}</div>
                 </div>
                 <div className='black-large-full-button' onClick={onSignUpButtonClickHandler}>{'회원 가입'}</div>
                 </>
