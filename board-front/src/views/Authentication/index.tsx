@@ -155,7 +155,7 @@ export default function Authentication() {
       const addressDetailRef = useRef<HTMLInputElement | null>(null);
 
       //          state: 페이지 번호 상태           //
-      const [page, setPage] = useState<1 | 2>(2);
+      const [page, setPage] = useState<1 | 2>(1);
       //          state: 이메일 상태          //
       const [email, setEmail] = useState<string>('');
       //          state: 패스워드 상태          //
@@ -348,7 +348,7 @@ export default function Authentication() {
           setPasswordCheckError(true);
           setPasswordCheckErrorMessage('비밀번호가 일치하지 않습니다.')
         }
-        if (!isEmailPatten || !isCheckedPassword || isEqualPassword) return;
+        if (!isEmailPatten || !isCheckedPassword || !isEqualPassword) return;
         setPage(2);
       }
 
@@ -370,7 +370,7 @@ export default function Authentication() {
           setPasswordCheckError(true);
           setPasswordCheckErrorMessage('비밀번호가 일치하지 않습니다.')
         }
-        if (!isEmailPatten || !isCheckedPassword || isEqualPassword) {
+        if (!isEmailPatten || !isCheckedPassword || !isEqualPassword) {
           setPage(1);
           return;
         }
@@ -446,6 +446,8 @@ export default function Authentication() {
       const onComplete = (data: Address) => {
         const { address } = data;
         setAddress(address);
+        setAddressError(false);
+        setAddressErrorMessage('');
         if (!addressDetailRef.current) return;
         addressDetailRef.current.focus();
       }
