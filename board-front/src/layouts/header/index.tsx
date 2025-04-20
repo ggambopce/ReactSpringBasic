@@ -169,6 +169,11 @@ export default function Header() {
         setUserPage(isUserPage);
     }, [pathname])
 
+    //          effect:           //
+    useEffect(() => {
+        setLogin(loginUser !== null);
+    }, [loginUser])
+
     //          render: Header 레이아웃 렌더링          //
     return (
     <div id='header'>

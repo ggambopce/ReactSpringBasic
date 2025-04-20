@@ -15,6 +15,7 @@ import { useLoginUserStore } from 'stores';
 import { getSignInUserRequest } from 'apis';
 import { GetSignInUserResponseDto } from 'apis/response/user';
 import ResponseDto from 'apis/response/response.dto';
+import { User } from 'types/interface';
 
 //      component: Application 컴포넌트     //
 function App() {
