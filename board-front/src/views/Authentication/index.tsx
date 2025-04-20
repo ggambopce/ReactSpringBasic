@@ -455,7 +455,7 @@ export default function Authentication() {
       //          effect: 페이지가 변경될 때 마다 실행될 함수          //
       useEffect(() => {
         if ( page === 2) {
-          if ( !nicknameRef.current) return;
+          if (!nicknameRef.current) return;
           nicknameRef.current.focus();
         }
       }, [page])
@@ -480,7 +480,7 @@ export default function Authentication() {
                 <>
                 <InputBox ref={nicknameRef} label='닉네임*' type='text' placeholder='닉네임을 입력해주세요' value={nickname} onChange={onNicknameChangeHandler} error={isNicknameError} message={nicknameErrorMessage} onKeyDown={onNicknameKeyDownHandler} />
                 <InputBox ref={telNumberRef} label='전화 번호*' type='text' placeholder='전화 번호를 입력해주세요' value={telNumber} onChange={onTelNumberChangeHandler} error={isTelNumberError} message={telNumberErrorMessage} onKeyDown={onTelNumberKeyDownHandler} />
-                <InputBox ref={addressRef} label='주소*' type='text' placeholder='우편번호 찾기' value={address} onChange={onAddressChangeHandler} error={isAddressError} message={addressErrorMessage} icon='expand-right-light-icon' onButtonClick={onAddressButtonClickHandler} onKeyDown={onAddressKeyDownHandler} />
+                <InputBox ref={addressRef} label='주소*' type='text'  placeholder='주소 찾기' value={address} onChange={onAddressChangeHandler} error={isAddressError} message={addressErrorMessage} icon='expand-right-light-icon' onButtonClick={onAddressButtonClickHandler} onKeyDown={onAddressKeyDownHandler} />
                 <InputBox ref={addressDetailRef} label='상세 주소' type='text' placeholder='상세 주소를 입력해주세요' value={addressDetail} onChange={onAddressDetailChangeHandler} error={false} onKeyDown={onAddressDetailKeyDownHandler} />
                 </>
               )}
