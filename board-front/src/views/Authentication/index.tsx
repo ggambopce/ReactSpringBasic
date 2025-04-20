@@ -1,4 +1,4 @@
-import React, { useRef, useState, KeyboardEvent, ChangeEvent } from 'react'
+import React, { useRef, useState, KeyboardEvent, ChangeEvent, useEffect } from 'react'
 import './style.css'
 import InputBox from 'components/inputBox';
 import { SignInRequestDto, SignUpRequestDto } from 'apis/request/auth';
@@ -452,6 +452,13 @@ export default function Authentication() {
         addressDetailRef.current.focus();
       }
 
+      //          effect: 페이지가 변경될 때 마다 실행될 함수          //
+      useEffect(() => {
+        if ( page === 2) {
+          if ( !nicknameRef.current) return;
+          nicknameRef.current.focus();
+        }
+      }, [page])
 
       //          render: sign up 컴포넌트 랜더링           //
       return (
