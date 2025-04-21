@@ -25,3 +25,6 @@ spring:
       max-request-size: 110MB
 
 secret-key: Q8eCrA0RZ/9IvQY5mZCfh9Mu+LC7RJGUm1S8qkFllYQ=
+
+file:
+  upload-dir: /Users/gangjinho/Desktop/fileUpload/
