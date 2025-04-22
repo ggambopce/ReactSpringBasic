@@ -1,0 +1,42 @@
+package com.jino.board_back.domain.board.service.implement;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
+import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
+import com.jino.board_back.domain.board.entity.BoardEntity;
+import com.jino.board_back.domain.board.repository.BoardRepository;
+import com.jino.board_back.domain.board.service.BoardService;
+import com.jino.board_back.domain.user.repository.UserRepository;
+import com.jino.board_back.global.dto.response.ResponseDto;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class BoardServiceImplement implements BoardService {
+
+    private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
+
+    @Override
+    public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
+
+        try {
+            boolean existedEmail = userRepository.existsByEmail(email);
+            if (!existedEmail)
+                return PostBoardResponseDto.notExistUser();
+
+            BoardEntity boardEntity = new BoardEntity(dto, email);
+            boardRepository.save(boardEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PostBoardResponseDto.success();
+    }
+
+}

@@ -16,7 +16,7 @@ public class FileServiceImplement implements FileService {
 
     @Value("${file.upload-dir}")
     private String filePath;
-    @Value("$(file.url)")
+    @Value("${file.url}")
     private String fileUrl;
 
     @Override
