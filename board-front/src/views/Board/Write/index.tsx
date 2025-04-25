@@ -57,5 +57,6 @@ export default function BoardWrite() {
         </div>
       </div>
     </div>
+    
   )
 }
