@@ -31,7 +31,6 @@ export default function BoardWrite() {
     titleRef.current.style.height = 'auto';
     titleRef.current.style.height = `${titleRef.current.scrollHeight}px`;
   }
-
   //          event handler: 내용 변경 이벤트 처리          //
   const onContentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value }  = event.target;
@@ -40,6 +39,20 @@ export default function BoardWrite() {
     if (!contentRef.current) return;
     contentRef.current.style.height = 'auto';
     contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
+  }
+  //          event handler: 이미지 변경 이벤트 처리          //
+  const onImageChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files || !event.target.files.length) return;
+    const file = event.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    const newImageUrls = imageUrls.map(item => item);
+    newImageUrls.push(imageUrl);
+    setImageUrls(newImageUrls);
+
+    const newBoardImageFileList = boardImageFileList.map(item => item);
+    newBoardImageFileList.push(file);
+    setBoardImageFileList(newBoardImageFileList);
+
   }
 
   //          event handler: 이미지 업로드 버튼 클릭 이벤트 처리          //
@@ -67,21 +80,17 @@ export default function BoardWrite() {
             <div className='icon-button' onClick={onImageUploadButtonClickHandler}>
               <div className='icon image-box-light-icon'></div>
             </div>
-            <input ref={imageInputRef} type='file' accept='image/*' style={{display:'none'}} />
+            <input ref={imageInputRef} type='file' accept='image/*' style={{display:'none'}} onChange={onImageChangeHandler} />
           </div>
           <div className='board-write-images-box'>
-            <div className='board-write-image-box'>
-              <img className='board-write-image' src='https://dimg.donga.com/wps/NEWS/IMAGE/2023/04/20/118917081.4.jpg'/>
-              <div className='icon-button image-close'>
-                <div className='icon close-icon'></div>
+            {imageUrls.map((imageUrl, index) => (
+              <div className='board-write-image-box'>
+                <img className='board-write-image' src={imageUrl}/>
+                <div className='icon-button image-close'>
+                  <div className='icon close-icon'></div>
               </div>
             </div>
-            <div className='board-write-image-box'>
-              <img className='board-write-image' src='https://img.hankyung.com/photo/202403/AM.36103013.1.jpg'/>
-              <div className='icon-button image-close'>
-                <div className='icon close-icon'></div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
