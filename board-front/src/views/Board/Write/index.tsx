@@ -61,6 +61,18 @@ export default function BoardWrite() {
     imageInputRef.current.click();
   }
 
+  //          event handler: 이미지 닫기 버튼 클릭 이벤트 처리          //
+  const onImageCloseButtonClickhandler = (deleteIndex: number) => {
+    if (!imageInputRef.current) return;
+    imageInputRef.current.value = '';
+
+    const newImageUrles = imageUrls.filter((url, index) => index !== deleteIndex);
+    setImageUrls(newImageUrles);
+
+    const newBoardImageFileList = boardImageFileList.filter((file, index) => index !== deleteIndex);
+    setBoardImageFileList(newBoardImageFileList);
+  }
+
   //          effect: 마운트 시 실행할 함수         //
   useEffect(() =>{
     resetBoard();
@@ -86,7 +98,7 @@ export default function BoardWrite() {
             {imageUrls.map((imageUrl, index) => (
               <div className='board-write-image-box'>
                 <img className='board-write-image' src={imageUrl}/>
-                <div className='icon-button image-close'>
+                <div className='icon-button image-close' onClick={() => onImageCloseButtonClickhandler(index)}>
                   <div className='icon close-icon'></div>
               </div>
             </div>
