@@ -3,6 +3,8 @@ import { SignInRequestDto, SignUpRequestDto } from "./request/auth";
 import { SignInResponseDto, SignUpResponseDto } from "./response/auth";
 import { ResponseDto } from "./response";
 import { GetSignInUserResponseDto } from "./response/user";
+import { PostBoardRequestDto } from "./request/board";
+import { PostBoardResponseDto } from "./response/board";
 
 const DOMAIN = 'http://localhost:8080';
 
@@ -43,7 +45,18 @@ export const SignUpRequest = async (requestBody: SignUpRequestDto) => {
     return result;
 }
 
-const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`
+const POST_BOARD_URL = () => `${API_DOMAIN}/board`;
+
+export const PostBoardRequest = async (requestBody: PostBoardRequestDto, accessToken: string) => {
+    const result = await axios.post(POST_BOARD_URL(), requestBody, authorization(accessToken))
+        .then(response => {
+            const responseBody: PostBoardResponseDto  = response.data;
+            return responseBody;
+        })
+    return result;
+}
+
+const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
 
 export const getSignInUserRequest = async (accessToken: string) => {
     const result = await axios.get(GET_SIGN_IN_USER_URL(), authorization(accessToken))
