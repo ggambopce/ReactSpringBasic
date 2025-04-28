@@ -141,7 +141,7 @@ export default function Header() {
 
         //          event handler: 업로드 버튼 클릭 이벤트 처리 함수            //
         const onUploadButtonClickHandler = () => {
-
+            
         }
 
         //          render: 업로드 버튼 컴포넌트 렌더링         //
