@@ -53,6 +53,11 @@ export const PostBoardRequest = async (requestBody: PostBoardRequestDto, accessT
             const responseBody: PostBoardResponseDto  = response.data;
             return responseBody;
         })
+        .catch(error => {
+            if (!error.response) return null;
+            const responseBody: ResponseDto = error.respose.data;
+            return responseBody;
+        })
     return result;
 }
 

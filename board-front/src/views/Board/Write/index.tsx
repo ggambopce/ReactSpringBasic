@@ -3,6 +3,7 @@ import './style.css'
 import { useBoardStore, useLoginUserStore } from 'stores';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH } from 'constant';
+import { useCookies } from 'react-cookie';
 
 //          component: 게시물 작성 화면 컴포넌트           //
 export default function BoardWrite() {
@@ -21,8 +22,8 @@ export default function BoardWrite() {
   const { boardImageFileList, setBoardImageFileList } = useBoardStore();
   const { resetBoard } = useBoardStore();
 
-  //          state: 로그인 유저 상태         //
-  const { loginUser } = useLoginUserStore();
+  //          state: 쿠키 상태          //
+  const [cookies, setCookies] = useCookies();
 
   //          state: 게시물 이미지 미리보기 URL 상태          //
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -85,7 +86,8 @@ export default function BoardWrite() {
 
   //          effect: 마운트 시 실행할 함수         //
   useEffect(() =>{
-    if (!loginUser) {
+    const accessToken = cookies.accessToken;
+    if (!accessToken) {
       navigator(MAIN_PATH());
       return;
     }
