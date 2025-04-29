@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
+import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
 import com.jino.board_back.domain.board.entity.BoardEntity;
 import com.jino.board_back.domain.board.repository.BoardRepository;
@@ -56,4 +57,15 @@ public class BoardServiceImplement implements BoardService {
         return PostBoardResponseDto.success();
     }
 
+    @Override
+    public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
+
+        try {
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetBoardResponseDto.success();
+    }
 }
