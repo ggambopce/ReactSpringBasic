@@ -5,19 +5,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.jino.board_back.domain.board.entity.BoardEntity;
+import com.jino.board_back.domain.board.repository.resultSet.GetBoardResultSet;
 
 @Repository
 public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
 
+    BoardEntity findByBoardNumber(Integer boardNumber);
+
     @Query(value = "SELECT " +
-            "B.board_numer AS board_number, " +
+            "B.board_numer AS boardNumber, " +
             "B.title AS title, " +
             "B.content AS content, " +
-            "B.writer_datetime AS write_datetime, " +
-            "B.profile_image AS profile_image " +
+            "B.write_datetime AS writeDatetime, " +
+            "B.writer_email AS writerEmail, " +
+            "B.nickname AS writerNickname, " +
+            "B.profile_image AS writerProfileImage " +
             "FROM board AS B " +
             "INNER JOIN user AS U " +
             "ON B.writer_email = U.email " +
-            "WHERE board_number = 1 ", nativeQuery = true)
-    BoardEntity getBoard(Integer boardNumber);
+            "WHERE board_number = ?1 ", nativeQuery = true)
+    GetBoardResultSet getBoard(Integer boardNumber);
+
 }

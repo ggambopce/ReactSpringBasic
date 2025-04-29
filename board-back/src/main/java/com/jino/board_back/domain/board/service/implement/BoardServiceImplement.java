@@ -11,6 +11,7 @@ import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
 import com.jino.board_back.domain.board.entity.BoardEntity;
 import com.jino.board_back.domain.board.repository.BoardRepository;
+import com.jino.board_back.domain.board.repository.resultSet.GetBoardResultSet;
 import com.jino.board_back.domain.board.service.BoardService;
 import com.jino.board_back.domain.image.entity.ImageEntity;
 import com.jino.board_back.domain.image.repository.ImageRepository;
@@ -60,12 +61,25 @@ public class BoardServiceImplement implements BoardService {
     @Override
     public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
 
+        GetBoardResultSet resultSet = null;
+        List<ImageEntity> imageEntities = new ArrayList<>();
+
         try {
+
+            resultSet = boardRepository.getBoard(boardNumber);
+            if (resultSet == null)
+                return GetBoardResponseDto.noExistBoard();
+
+            imageEntities = imageRepository.findByBoardNumber(boardNumber);
+
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            boardEntity.increaseViewCount();
+            boardRepository.save(boardEntity);
 
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
-        return GetBoardResponseDto.success();
+        return GetBoardResponseDto.success(resultSet, imageEntities);
     }
 }
