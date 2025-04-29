@@ -95,17 +95,21 @@ public class BoardServiceImplement implements BoardService {
             if (!existedUser)
                 return PutFavoriteResponseDto.noExistUser();
 
-            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
-            if (!existedBoard)
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if (boardEntity == null)
                 return PutFavoriteResponseDto.noExistBoard();
 
             FavoriteEntity favoriteEntity = favoriteRepository.findByBoardNumberAndUserEmail(boardNumber, email);
             if (favoriteEntity == null) {
                 favoriteEntity = new FavoriteEntity(email, boardNumber);
                 favoriteRepository.save(favoriteEntity);
+                boardEntity.increaseFavoriteCount();
             } else {
                 favoriteRepository.delete(favoriteEntity);
+                boardEntity.decreaseFavoriteCount();
             }
+
+            boardRepository.save(boardEntity);
 
         } catch (Exception exception) {
             exception.printStackTrace();
