@@ -9,4 +9,5 @@ import com.jino.board_back.domain.favorite.entity.primaryKey.FavoritePK;
 @Repository
 public interface FavoriteRepository extends JpaRepository<FavoriteEntity, FavoritePK> {
 
+    FavoriteEntity findByBoardNumberAndUserEmail(Integer boardNumber, String userEmail);
 }
