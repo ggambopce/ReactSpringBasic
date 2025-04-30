@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jino.board_back.domain.favorite.entity.FavoriteEntity;
 import com.jino.board_back.domain.favorite.entity.primaryKey.FavoritePK;
-import com.jino.board_back.domain.favorite.repository.resultSet.GetFavoriteResultSet;
+import com.jino.board_back.domain.favorite.repository.resultSet.GetFavoriteListResultSet;
 
 @Repository
 public interface FavoriteRepository extends JpaRepository<FavoriteEntity, FavoritePK> {
@@ -23,5 +23,5 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Favori
             "INNER JOIN user AS U " +
             "ON F.user_email = U.email " +
             "WHERE F.board_number = ?1", nativeQuery = true)
-    List<GetFavoriteResultSet> getFavoriteResultSets(Integer boardNumber);
+    List<GetFavoriteListResultSet> getFavoriteList(Integer boardNumber);
 }

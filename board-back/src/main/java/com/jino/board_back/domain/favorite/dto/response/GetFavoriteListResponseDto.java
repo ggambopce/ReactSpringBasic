@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.jino.board_back.domain.favorite.dto.FavoriteListItem;
+import com.jino.board_back.domain.favorite.repository.resultSet.GetFavoriteListResultSet;
 import com.jino.board_back.global.common.ResponseCode;
 import com.jino.board_back.global.common.ResponseMessage;
 import com.jino.board_back.global.dto.response.ResponseDto;
@@ -17,12 +18,13 @@ public class GetFavoriteListResponseDto extends ResponseDto {
 
     private List<FavoriteListItem> favoriteList;
 
-    private GetFavoriteListResponseDto() {
+    private GetFavoriteListResponseDto(List<GetFavoriteListResultSet> resultSets) {
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+        this.favoriteList = FavoriteListItem.copyList(resultSets);
     }
 
-    public static ResponseEntity<GetFavoriteListResponseDto> success() {
-        GetFavoriteListResponseDto result = new GetFavoriteListResponseDto();
+    public static ResponseEntity<GetFavoriteListResponseDto> success(List<GetFavoriteListResultSet> resultSets) {
+        GetFavoriteListResponseDto result = new GetFavoriteListResponseDto(resultSets);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

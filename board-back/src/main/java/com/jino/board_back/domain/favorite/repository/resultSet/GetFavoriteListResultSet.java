@@ -1,6 +1,6 @@
 package com.jino.board_back.domain.favorite.repository.resultSet;
 
-public interface GetFavoriteResultSet {
+public interface GetFavoriteListResultSet {
     String getEmail();
 
     String getNickname();
