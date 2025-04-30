@@ -12,6 +12,7 @@ import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
 import com.jino.board_back.domain.board.service.BoardService;
+import com.jino.board_back.domain.favorite.dto.response.GetFavoriteListResponseDto;
 import com.jino.board_back.domain.favorite.dto.response.PutFavoriteResponseDto;
 
 import jakarta.validation.Valid;
@@ -43,6 +44,13 @@ public class BoardController {
     public ResponseEntity<? super PutFavoriteResponseDto> putFavorite(@PathVariable("boardNumber") Integer boardNumber,
             @AuthenticationPrincipal String email) {
         ResponseEntity<? super PutFavoriteResponseDto> response = boardService.putFavorite(boardNumber, email);
+        return response;
+    }
+
+    @GetMapping("/{boardNumber}/favorite-list")
+    public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(
+            @PathVariable("boardNumber") Integer boardNumber) {
+        ResponseEntity<? super GetFavoriteListResponseDto> response = boardService.getFavoriteList(boardNumber);
         return response;
     }
 }
