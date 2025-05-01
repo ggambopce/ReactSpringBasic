@@ -56,12 +56,4 @@ public class BoardController {
         return response;
     }
 
-    @PostMapping("/{boardNumber}/comment")
-    public ResponseEntity<? super PostCommentResponseDto> postComment(
-            @RequestBody @Valid PostCommentRequestDto requestDto, @PathVariable("boardNumber") Integer boardNumber,
-            @AuthenticationPrincipal String email) {
-        ResponseEntity<? super PostCommentResponseDto> response = boardService.postConmment(requestDto, boardNumber,
-                email);
-        return response;
-    }
 }
