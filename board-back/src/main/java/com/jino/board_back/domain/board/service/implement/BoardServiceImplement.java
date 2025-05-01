@@ -13,6 +13,10 @@ import com.jino.board_back.domain.board.entity.BoardEntity;
 import com.jino.board_back.domain.board.repository.BoardRepository;
 import com.jino.board_back.domain.board.repository.resultSet.GetBoardResultSet;
 import com.jino.board_back.domain.board.service.BoardService;
+import com.jino.board_back.domain.comment.dto.request.PostCommentRequestDto;
+import com.jino.board_back.domain.comment.dto.response.PostCommentResponseDto;
+import com.jino.board_back.domain.comment.entity.CommentEntity;
+import com.jino.board_back.domain.comment.repository.CommentRepository;
 import com.jino.board_back.domain.favorite.dto.response.GetFavoriteListResponseDto;
 import com.jino.board_back.domain.favorite.dto.response.PutFavoriteResponseDto;
 import com.jino.board_back.domain.favorite.entity.FavoriteEntity;
@@ -33,6 +37,7 @@ public class BoardServiceImplement implements BoardService {
     private final BoardRepository boardRepository;
     private final ImageRepository imageRepository;
     private final FavoriteRepository favoriteRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
@@ -138,5 +143,31 @@ public class BoardServiceImplement implements BoardService {
             return ResponseDto.databaseError();
         }
         return GetFavoriteListResponseDto.success(resultSets);
+    }
+
+    @Override
+    public ResponseEntity<? super PostCommentResponseDto> postConmment(PostCommentRequestDto dto, Integer boardNumber,
+            String email) {
+        try {
+
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if (boardEntity == null)
+                return PostCommentResponseDto.noExistBoard();
+
+            boolean existedUser = userRepository.existsByEmail(email);
+            if (!existedUser)
+                return PostCommentResponseDto.noExistUser();
+
+            CommentEntity commentEntity = new CommentEntity(dto, boardNumber, email);
+            commentRepository.save(commentEntity);
+
+            boardEntity.increaseCommentCount();
+            boardRepository.save(boardEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return PostCommentResponseDto.success();
     }
 }

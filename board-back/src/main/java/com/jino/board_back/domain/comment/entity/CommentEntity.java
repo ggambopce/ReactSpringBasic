@@ -1,5 +1,11 @@
 package com.jino.board_back.domain.comment.entity;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+
+import com.jino.board_back.domain.comment.dto.request.PostCommentRequestDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,4 +30,16 @@ public class CommentEntity {
     private String userEmail;
     private int boardNumber;
 
+    public CommentEntity(PostCommentRequestDto dto, Integer boardNumber, String email) {
+
+        Date now = Date.from(Instant.now());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+        String writeDatetime = simpleDateFormat.format(now);
+
+        this.content = dto.getComment();
+        this.writeDatetime = writeDatetime;
+        this.userEmail = email;
+        this.boardNumber = boardNumber;
+
+    }
 }
