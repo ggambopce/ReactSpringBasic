@@ -145,29 +145,4 @@ public class BoardServiceImplement implements BoardService {
         return GetFavoriteListResponseDto.success(resultSets);
     }
 
-    @Override
-    public ResponseEntity<? super PostCommentResponseDto> postConmment(PostCommentRequestDto dto, Integer boardNumber,
-            String email) {
-        try {
-
-            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
-            if (boardEntity == null)
-                return PostCommentResponseDto.noExistBoard();
-
-            boolean existedUser = userRepository.existsByEmail(email);
-            if (!existedUser)
-                return PostCommentResponseDto.noExistUser();
-
-            CommentEntity commentEntity = new CommentEntity(dto, boardNumber, email);
-            commentRepository.save(commentEntity);
-
-            boardEntity.increaseCommentCount();
-            boardRepository.save(boardEntity);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return PostCommentResponseDto.success();
-    }
 }
