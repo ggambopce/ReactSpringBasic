@@ -1,5 +1,8 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import './style.css'
+import FavoriteItem from 'components/favoriteItem'
+import { FavoriteListItemType } from 'types/interface'
+import { favoriteListMock } from 'mocks'
 
 
 //          component: 게시물 상세 화면 컴포넌트           //
@@ -41,9 +44,47 @@ export default function BoardDetail() {
 
   //          component: 게시물 상세 하단 컴포넌트           //
   const BoardDetailBottom = () => {
+
+    const [favoriteList, setFavoriteList] = useState<FavoriteListItemType[]>([]);
     
+    useEffect(() => {
+      setFavoriteList(favoriteListMock)
+    }, []);
+
     //          render: 게시물 상세 하단 컴포넌트 렌더링           //
-    return (<></>)
+    return (
+      <div id='board=detail-bottom'>
+        <div className='board-detail-bottom-button-box'>
+          <div className='board-detail-bottom-button-group'>
+            <div className='icon-button'>
+              <div className='icon favorite-fill-icon'></div>
+            </div>
+            <div className='board-detail-bottom-button-text'>{`좋아요 ${12}`}</div>
+            <div className='icon-button'>
+              <div className='icon up-light-icon'></div>
+            </div>
+          </div>
+          <div className='board-detail-bottom-button-group'>
+            <div className='icon-button'>
+              <div className='icon comment-icon'></div>
+            </div>
+            <div className='board-detail-bottom-button-text'>{`댓글 ${12}`}</div>
+            <div className='icon-button'>
+              <div className='icon up-light-icon'></div>
+            </div>
+          </div>
+        </div>
+        <div className='board-detail-bottom-favorite-box'>
+          <div className='board-detail-bottom-favorite-container'>
+            <div className='board-detail-bottom-favorite-title'>{'좋아요 '}<span className='emphasis'>{12}</span></div>
+            <div className='board-detail-bottom-favorite-contents'>
+              {favoriteList.map(item => <FavoriteItem favoriteListItem={item} />)} 
+            </div>
+          </div>
+        </div>
+        <div className='board-detail-bottom-comment-box'></div>
+      </div>
+    )
   }
 
   //          render: 게시물 상세 화면 컴포넌트 렌더링           //
