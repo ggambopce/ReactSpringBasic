@@ -187,7 +187,7 @@ export default function Header() {
         
     }
 
-    //          effect: path가 변결될 때 마다 실행될 함수           //
+    //          effect:            //
     useEffect(() => {
         const isAuthPage = pathname.startsWith(AUTH_PATH());
         setAuthPage(isAuthPage);
@@ -231,4 +231,4 @@ export default function Header() {
   )
 }
 
- 
+  

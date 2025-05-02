@@ -59,7 +59,7 @@ export const PostBoardRequest = async (requestBody: PostBoardRequestDto, accessT
             return responseBody;
         })
     return result;
-}
+} 
 
 const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
 

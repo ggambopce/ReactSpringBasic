@@ -1,7 +1,6 @@
 import React from 'react'
 import './style.css';
 
-
 //          component: Footer 레이아웃          //
 export default function Footer() {
 

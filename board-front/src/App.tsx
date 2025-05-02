@@ -51,8 +51,8 @@ function App() {
   //  description: 검색 화면 : '/search/:word' - Search  //
   //  description: 유저 페이지  : '/user/:userEmail' - User //
   //  description: 게시물 상세보기 : '/board/detail/:boardNumber' - BoardDetail //
-  //  description: 게시물 상세보기 : '/board/write' - BoardWrite'  //
-  //  description: 게시물 상세보기 : '/board/update/:boardNumber' - BoardUpdate //
+  //  description: 게시물 작성하기 : '/board/write' - BoardWrite'  //
+  //  description: 게시물 수정하기 : '/board/update/:boardNumber' - BoardUpdate //
   return (
     <>
       <Routes>
