@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import './style.css'
 import FavoriteItem from 'components/favoriteItem'
-import { FavoriteListItemType } from 'types/interface'
-import { favoriteListMock } from 'mocks'
+import { CommentListItemType, FavoriteListItemType } from 'types/interface'
+import { commentListMock, favoriteListMock } from 'mocks'
+import CommentItem from 'components/commentItem'
 
 
 //          component: 게시물 상세 화면 컴포넌트           //
@@ -46,9 +47,11 @@ export default function BoardDetail() {
   const BoardDetailBottom = () => {
 
     const [favoriteList, setFavoriteList] = useState<FavoriteListItemType[]>([]);
+    const [commentList, setCommentList] = useState<CommentListItemType[]>([]);
     
     useEffect(() => {
-      setFavoriteList(favoriteListMock)
+      setFavoriteList(favoriteListMock);
+      setCommentList(commentListMock);
     }, []);
 
     //          render: 게시물 상세 하단 컴포넌트 렌더링           //
@@ -82,7 +85,26 @@ export default function BoardDetail() {
             </div>
           </div>
         </div>
-        <div className='board-detail-bottom-comment-box'></div>
+        <div className='board-detail-bottom-comment-box'>
+          <div className='board-detail-bottom-comment-container'>
+            <div className='board-detail-bottom-comment-title'>{'댓글 '}<span className='emphasis'>{12}</span></div>
+            <div className='board-detail-bottom-comment-list-container'>
+              {commentList.map(item => <CommentItem commentListItem={item} />)}
+            </div>
+          </div>
+          <div className='divider'></div>
+          <div className='board-detail-bottom-comment-pagination-box'>
+            <
+          </div>
+          <div className='board-detail-bottom-comment-input-box'>
+            <div className='board-detail-comment-input-container'>
+              <textarea className='board-detail-bottom-comment-textarea' placeholder='댓글을 작성해주세요.'/>
+              <div className='board-detail-bottom-comment-button-box'>
+                <div className='disable-button'>{'댓글달기'}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
