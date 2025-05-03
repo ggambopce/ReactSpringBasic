@@ -68,7 +68,7 @@ export default function BoardDetail() {
 
     //          render: 게시물 상세 하단 컴포넌트 렌더링           //
     return (
-      <div id='board=detail-bottom'>
+      <div id='board-detail-bottom'>
         <div className='board-detail-bottom-button-box'>
           <div className='board-detail-bottom-button-group'>
             <div className='icon-button'>
@@ -109,7 +109,7 @@ export default function BoardDetail() {
             <Pagination />
           </div>
           <div className='board-detail-bottom-comment-input-box'>
-            <div className='board-detail-comment-input-container'>
+            <div className='board-detail-bottom-comment-input-container'>
               <textarea className='board-detail-bottom-comment-textarea' placeholder='댓글을 작성해주세요.'/>
               <div className='board-detail-bottom-comment-button-box'>
                 <div className='disable-button'>{'댓글달기'}</div>
