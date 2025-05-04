@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './style.css'
 import FavoriteItem from 'components/favoriteItem'
 import { Board, CommentListItemType, FavoriteListItemType } from 'types/interface'
-import { commentListMock, favoriteListMock } from 'mocks'
+import { boardMock, commentListMock, favoriteListMock } from 'mocks'
 import CommentItem from 'components/commentItem'
 import Pagination from 'components/pagination'
 import defaultProfileImage from 'assets/image/default-profile-image.png';
@@ -41,18 +41,23 @@ export default function BoardDetail() {
       setShowMore(!showMore);
     }
 
+    //          effect: 게시물 번호 path variable이 바뀔때 마다 게시물 불러오기          //
+    useEffect(()=> {
+      setBoard(boardMock);
+    }, [boardNumber]);
+
     //          render: 게시물 상세 상단 컴포넌트 렌더링           //
     if (!board) return <></>
     return (
       <div id='board-detail-top'>
         <div className='board-detail-top-header'>
-          <div className='board-detail-title'>{'제네릭(Generic)은 자바와 같은 언어에서 데이터 타입을 일반화할 수 있는 방법을 제공하는 기능이다'}</div>
+          <div className='board-detail-title'>{board.title}</div>
           <div className='board-detail-top-sub-box'>
             <div className='board-detail-write-info-box'>
-              <div className='board-detail-writer-profile-image' style={{backgroundImage: `url(${board?.writerProfileImage ? board. writerProfileImage : defaultProfileImage})`}}></div>
-              <div className='board-detail-writer-nickname' onClick={onNicknameClickHandler}>{'안녕나는지노'}</div>
+              <div className='board-detail-writer-profile-image' style={{backgroundImage: `url(${board.writerProfileImage ? board. writerProfileImage : defaultProfileImage})`}}></div>
+              <div className='board-detail-writer-nickname' onClick={onNicknameClickHandler}>{board.writerNickname}</div>
               <div className='board-detail-info-divider'>{'\|'}</div>
-              <div className='board-detail-write-date'>{'2025. 05. 03.'}</div>
+              <div className='board-detail-write-date'>{board.writeDatetime}</div>
             </div>
             <div className='icon-button' onClick={onMoreButtonClickHandler}>
               <div className='icon more-icon'></div>
@@ -68,8 +73,9 @@ export default function BoardDetail() {
         </div>
         <div className='divider'></div>
         <div className='board-detail-top-main'>
-          <div className='board-detail-main-text'>{'제네릭을 사용하면 클래스, 인터페이스, 메서드가 다양한 데이터 타입을 처리할 수 있도록 코드의 유연성을 높일 수 있다. 이는 코드의 재사용성을 증가시키고, 컴파일 타임에서 타입 안전성을 보장할 수 있게 해준다.'}</div>
-          <img className='board-detail-main-image' src='https://blog.kakaocdn.net/dn/nx9MF/btrvr9Mhfvz/N4mwWJEONQxcpsNnsJX6b1/img.jpg' />
+          <div className='board-detail-main-text'>{board.content}</div>
+          {board.boardImageList.map(image => <img className='board-detail-main-image' src={image} /> )}
+          
         </div>
       </div>
     )
