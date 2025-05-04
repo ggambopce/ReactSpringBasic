@@ -20,6 +20,7 @@ import com.jino.board_back.domain.favorite.dto.response.PutFavoriteResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
@@ -54,6 +55,11 @@ public class BoardController {
             @PathVariable("boardNumber") Integer boardNumber) {
         ResponseEntity<? super GetFavoriteListResponseDto> response = boardService.getFavoriteList(boardNumber);
         return response;
+    }
+
+    @PatchMapping("/{boardNumber}/increase-view-count")
+    public ResponseEntity<> increaseViewCount(@PathVariable("boardNumber") Integer boardNumber) {
+
     }
 
 }
