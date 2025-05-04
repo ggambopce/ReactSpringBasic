@@ -1,21 +1,40 @@
 import { useEffect, useState } from 'react'
 import './style.css'
 import FavoriteItem from 'components/favoriteItem'
-import { CommentListItemType, FavoriteListItemType } from 'types/interface'
+import { Board, CommentListItemType, FavoriteListItemType } from 'types/interface'
 import { commentListMock, favoriteListMock } from 'mocks'
 import CommentItem from 'components/commentItem'
 import Pagination from 'components/pagination'
 import defaultProfileImage from 'assets/image/default-profile-image.png';
+import { useLoginUserStore } from 'stores'
+import { useNavigate, useParams } from 'react-router-dom'
+import { USER_PATH } from 'constant'
 
 
 //          component: 게시물 상세 화면 컴포넌트           //
 export default function BoardDetail() {
 
+  //          state: 게시물 번호 path variable 상태          //
+  const { boardNumber } = useParams();
+  //          state: 로그인 유지 상태          //
+  const { loginUser } = useLoginUserStore();
+
+  //          function: 네비게이트 함수          //
+  const navigator = useNavigate();
+
   //          component: 게시물 상세 상단 컴포넌트           //
   const BoardDedtailTop = () => {
     
+    //          state: 게시물 상태          //
+    const [board, setBoard] = useState<Board | null>(null);
     //          state: more 버튼 상태          //
     const [showMore, setShowMore] = useState<boolean>(false);
+
+    //          event handler: 닉네임 클릭 이벤트 처리           //
+    const onNicknameClickHandler = () => {
+      if (!board) return;
+      navigator(USER_PATH(board.writerEmail))
+    }
 
     //          event handler: more 버튼 클릭 이벤트 처리          //
     const onMoreButtonClickHandler = () => {
@@ -23,14 +42,15 @@ export default function BoardDetail() {
     }
 
     //          render: 게시물 상세 상단 컴포넌트 렌더링           //
+    if (!board) return <></>
     return (
       <div id='board-detail-top'>
         <div className='board-detail-top-header'>
           <div className='board-detail-title'>{'제네릭(Generic)은 자바와 같은 언어에서 데이터 타입을 일반화할 수 있는 방법을 제공하는 기능이다'}</div>
           <div className='board-detail-top-sub-box'>
             <div className='board-detail-write-info-box'>
-              <div className='board-detail-writer-profile-image' style={{backgroundImage: `url(${defaultProfileImage})`}}></div>
-              <div className='board-detail-writer-nickname'>{'안녕나는지노'}</div>
+              <div className='board-detail-writer-profile-image' style={{backgroundImage: `url(${board?.writerProfileImage ? board. writerProfileImage : defaultProfileImage})`}}></div>
+              <div className='board-detail-writer-nickname' onClick={onNicknameClickHandler}>{'안녕나는지노'}</div>
               <div className='board-detail-info-divider'>{'\|'}</div>
               <div className='board-detail-write-date'>{'2025. 05. 03.'}</div>
             </div>
