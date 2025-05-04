@@ -8,7 +8,7 @@ import Pagination from 'components/pagination'
 import defaultProfileImage from 'assets/image/default-profile-image.png';
 import { useLoginUserStore } from 'stores'
 import { useNavigate, useParams } from 'react-router-dom'
-import { USER_PATH } from 'constant'
+import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant'
 
 
 //          component: 게시물 상세 화면 컴포넌트           //
@@ -35,10 +35,22 @@ export default function BoardDetail() {
       if (!board) return;
       navigator(USER_PATH(board.writerEmail))
     }
-
     //          event handler: more 버튼 클릭 이벤트 처리          //
     const onMoreButtonClickHandler = () => {
       setShowMore(!showMore);
+    }
+    //          event handler: 수정 버튼 클릭 이벤트 처리          //
+    const onUpdateButtonClickHandler = () => {
+      if (!board || !loginUser) return;
+      if (loginUser.email !== board.writerEmail) return;
+      navigator(BOARD_PATH() + '/' + BOARD_UPDATE_PATH(board.boardNumber));
+    }
+    //          event handler: 삭제 버튼 클릭 이벤트 처리          //
+    const onDeleteButtonClickHandler = () => {
+      if (!board || !loginUser) return;
+      if (loginUser.email !== board.writerEmail) return;
+      // TODO: Delete Request
+      navigator(MAIN_PATH());
     }
 
     //          effect: 게시물 번호 path variable이 바뀔때 마다 게시물 불러오기          //
@@ -64,9 +76,9 @@ export default function BoardDetail() {
             </div>
             {showMore &&
             <div className='board-detail-more-box'>
-              <div className='board-detail-update-button'>{'수정'}</div>
+              <div className='board-detail-update-button' onClick={onUpdateButtonClickHandler}>{'수정'}</div>
               <div className='divider'></div>
-              <div className='board-detail-delete-button'>{'삭제'}</div>
+              <div className='board-detail-delete-button' onClick={onDeleteButtonClickHandler}>{'삭제'}</div>
             </div>
             }
           </div>
