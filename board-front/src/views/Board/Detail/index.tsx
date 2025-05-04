@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css'
 import FavoriteItem from 'components/favoriteItem'
 import { Board, CommentListItemType, FavoriteListItemType } from 'types/interface'
@@ -96,6 +96,9 @@ export default function BoardDetail() {
   //          component: 게시물 상세 하단 컴포넌트           //
   const BoardDetailBottom = () => {
 
+    //          state: 댓글 textarea 참조 상태           //
+    const commentRef = useRef<HTMLTextAreaElement | null>(null);
+
     //          state: 좋아요 리스트 상태          //
     const [favoriteList, setFavoriteList] = useState<FavoriteListItemType[]>([]);
     //          state: 댓글 리스트 상태(임시)          //
@@ -106,6 +109,8 @@ export default function BoardDetail() {
     const [showFavorite, setShowFavorite] = useState<boolean>(false);
     //          state: 댓글 상자 보기 상태          //
     const [showComment, setShowComment] = useState<boolean>(false);
+     //          state: 댓글 상태          //
+     const [comment, setComment] = useState<string>('');
 
     //          event handler: 좋아요 클릭 이벤트 처리           //
     const onFavoriteClickHandler = () => {
@@ -118,6 +123,20 @@ export default function BoardDetail() {
     //          event handler: 댓글 상자 보기 클릭 이벤트 처리           //
     const onShowCommentClickHandler = () => {
       setShowComment(!showComment);
+    }
+     //          event handler: 댓글 작성 버튼 클릭 이벤트 처리           //
+     const onCommentSubmitButtonClickHandler = () => {
+      if (!comment) return;
+      alert('!!');
+    }
+    //          event handler: 댓글 변경 이벤트 처리           //
+    const onCommentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+      const { value } = event.target;
+      setComment(value);
+      if (!commentRef.current) return;
+      commentRef.current.style.height = 'auto';
+      commentRef.current.style.height = `${commentRef.current.scrollHeight}px`;
+
     }
 
     //          effect: 게시물 번호 path variable이 바뀔때 마다 좋아요 및 댓글 리스트 불러오기          //
@@ -175,9 +194,9 @@ export default function BoardDetail() {
           </div>
           <div className='board-detail-bottom-comment-input-box'>
             <div className='board-detail-bottom-comment-input-container'>
-              <textarea className='board-detail-bottom-comment-textarea' placeholder='댓글을 작성해주세요.'/>
+              <textarea ref={commentRef} className='board-detail-bottom-comment-textarea' placeholder='댓글을 작성해주세요.' value={comment} onChange={onCommentChangeHandler} />
               <div className='board-detail-bottom-comment-button-box'>
-                <div className='disable-button'>{'댓글달기'}</div>
+                <div className= {comment === '' ? 'disable-button' : 'black-button'} onClick={onCommentSubmitButtonClickHandler}>{'댓글달기'}</div>
               </div>
             </div>
           </div>
