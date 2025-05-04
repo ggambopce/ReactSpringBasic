@@ -96,9 +96,31 @@ export default function BoardDetail() {
   //          component: 게시물 상세 하단 컴포넌트           //
   const BoardDetailBottom = () => {
 
+    //          state: 좋아요 리스트 상태          //
     const [favoriteList, setFavoriteList] = useState<FavoriteListItemType[]>([]);
+    //          state: 댓글 리스트 상태(임시)          //
     const [commentList, setCommentList] = useState<CommentListItemType[]>([]);
-    
+    //          state: 좋아요 상태          //
+    const [isFavorite, setFavorite] = useState<boolean>(false);
+    //          state: 좋아요 상자 보기 상태          //
+    const [showFavorite, setShowFavorite] = useState<boolean>(false);
+    //          state: 댓글 상자 보기 상태          //
+    const [showComment, setShowComment] = useState<boolean>(false);
+
+    //          event handler: 좋아요 클릭 이벤트 처리           //
+    const onFavoriteClickHandler = () => {
+      setFavorite(!isFavorite);
+    }
+    //          event handler: 좋아요 상자 보기 클릭 이벤트 처리           //
+    const onShowFavoriteClickHandler = () => {
+      setShowFavorite(!showFavorite);
+    }
+    //          event handler: 댓글 상자 보기 클릭 이벤트 처리           //
+    const onShowCommentClickHandler = () => {
+      setShowComment(!showComment);
+    }
+
+    //          effect: 게시물 번호 path variable이 바뀔때 마다 좋아요 및 댓글 리스트 불러오기          //
     useEffect(() => {
       setFavoriteList(favoriteListMock);
       setCommentList(commentListMock);
@@ -109,35 +131,40 @@ export default function BoardDetail() {
       <div id='board-detail-bottom'>
         <div className='board-detail-bottom-button-box'>
           <div className='board-detail-bottom-button-group'>
-            <div className='icon-button'>
-              <div className='icon favorite-fill-icon'></div>
+            <div className='icon-button' onClick={onFavoriteClickHandler}>
+              {isFavorite ? <div className='icon favorite-fill-icon'></div> :
+              <div className='icon favorite-light-icon'></div>
+              }
             </div>
-            <div className='board-detail-bottom-button-text'>{`좋아요 ${12}`}</div>
-            <div className='icon-button'>
-              <div className='icon up-light-icon'></div>
+            <div className='board-detail-bottom-button-text'>{`좋아요 ${favoriteList.length}`}</div>
+            <div className='icon-button' onClick={onShowFavoriteClickHandler}>
+              {showFavorite ? <div className='icon up-light-icon'></div> : <div className='icon down-light-icon'></div>}
             </div>
           </div>
           <div className='board-detail-bottom-button-group'>
             <div className='icon-button'>
               <div className='icon comment-icon'></div>
             </div>
-            <div className='board-detail-bottom-button-text'>{`댓글 ${12}`}</div>
-            <div className='icon-button'>
-              <div className='icon up-light-icon'></div>
+            <div className='board-detail-bottom-button-text'>{`댓글 ${commentList.length}`}</div>
+            <div className='icon-button' onClick={onShowCommentClickHandler}>
+              {showComment ? <div className='icon up-light-icon'></div> : <div className='icon down-light-icon'></div>}
             </div>
           </div>
         </div>
-        <div className='board-detail-bottom-favorite-box'>
+        {showFavorite &&
+          <div className='board-detail-bottom-favorite-box'>
           <div className='board-detail-bottom-favorite-container'>
-            <div className='board-detail-bottom-favorite-title'>{'좋아요 '}<span className='emphasis'>{12}</span></div>
+            <div className='board-detail-bottom-favorite-title'>{'좋아요 '}<span className='emphasis'>{favoriteList.length}</span></div>
             <div className='board-detail-bottom-favorite-contents'>
               {favoriteList.map(item => <FavoriteItem favoriteListItem={item} />)} 
             </div>
           </div>
         </div>
+        }
+        {showComment &&
         <div className='board-detail-bottom-comment-box'>
           <div className='board-detail-bottom-comment-container'>
-            <div className='board-detail-bottom-comment-title'>{'댓글 '}<span className='emphasis'>{12}</span></div>
+            <div className='board-detail-bottom-comment-title'>{'댓글 '}<span className='emphasis'>{commentList.length}</span></div>
             <div className='board-detail-bottom-comment-list-container'>
               {commentList.map(item => <CommentItem commentListItem={item} />)}
             </div>
@@ -155,6 +182,8 @@ export default function BoardDetail() {
             </div>
           </div>
         </div>
+        }
+        
       </div>
     )
   }
