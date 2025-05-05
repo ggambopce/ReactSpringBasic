@@ -9,10 +9,10 @@ import defaultProfileImage from 'assets/image/default-profile-image.png';
 import { useLoginUserStore } from 'stores'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant'
-import { getBoardRequest, increaseViewCountRequest } from 'apis'
+import { getBoardRequest, getFavoriteListRequest, increaseViewCountRequest } from 'apis'
 import GetBoardResponseDto from 'apis/response/board/get-board.response.dto'
 import { ResponseDto } from 'apis/response'
-import { IncreaseViewCountResponseDto } from 'apis/response/board'
+import { GetFavoriteListResponseDto, IncreaseViewCountResponseDto } from 'apis/response/board'
 
 import dayjs from 'dayjs';
 
@@ -160,8 +160,20 @@ export default function BoardDetail() {
     const [showFavorite, setShowFavorite] = useState<boolean>(false);
     //          state: 댓글 상자 보기 상태          //
     const [showComment, setShowComment] = useState<boolean>(false);
-     //          state: 댓글 상태          //
-     const [comment, setComment] = useState<string>('');
+    //          state: 댓글 상태          //
+    const [comment, setComment] = useState<string>('');
+
+    //          function: get favorite list response 처리 함수          //
+    const getFavoriteListResponse = (responseBody: GetFavoriteListResponseDto | ResponseDto | null) => {
+      if (!responseBody) return;
+      const { code } = responseBody;
+      if (code === 'NB') alert('존재하지 않는 게시물 입니다.');
+      if (code === 'DBE') alert('데이터베이스 오류입니다.')
+      if (code !== 'SU') return;
+
+      const { favoriteList } = responseBody as GetFavoriteListResponseDto;
+      setFavoriteList(favoriteList);
+    }
 
     //          event handler: 좋아요 클릭 이벤트 처리           //
     const onFavoriteClickHandler = () => {
@@ -192,9 +204,10 @@ export default function BoardDetail() {
 
     //          effect: 게시물 번호 path variable이 바뀔때 마다 좋아요 및 댓글 리스트 불러오기          //
     useEffect(() => {
-      setFavoriteList(favoriteListMock);
+      if (!boardNumber) return;
+      getFavoriteListRequest(boardNumber).then(getFavoriteListResponse);
       setCommentList(commentListMock);
-    }, []);
+    }, [boardNumber]);
 
     //          render: 게시물 상세 하단 컴포넌트 렌더링           //
     return (

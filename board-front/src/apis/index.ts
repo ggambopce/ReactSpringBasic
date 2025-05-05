@@ -78,7 +78,7 @@ export const increaseViewCountRequest = async (boardNumber: number | string) => 
     return result;
 }
 
-export const getFavoriteListResponse = async (boardNumber: number | string) => {
+export const getFavoriteListRequest = async (boardNumber: number | string) => {
     const result = await axios.get(GET_FAVORITE_LIST_UREL(boardNumber))
         .then(response => {
             const responseBody: GetFavoriteListResponseDto = response.data;
