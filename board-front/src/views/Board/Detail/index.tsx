@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css'
 import FavoriteItem from 'components/favoriteItem'
 import { Board, CommentListItemType, FavoriteListItemType } from 'types/interface'
-import { boardMock, commentListMock, favoriteListMock } from 'mocks'
+import { commentListMock, favoriteListMock } from 'mocks'
 import CommentItem from 'components/commentItem'
 import Pagination from 'components/pagination'
 import defaultProfileImage from 'assets/image/default-profile-image.png';
@@ -13,6 +13,8 @@ import { getBoardRequest, increaseViewCountRequest } from 'apis'
 import GetBoardResponseDto from 'apis/response/board/get-board.response.dto'
 import { ResponseDto } from 'apis/response'
 import { IncreaseViewCountResponseDto } from 'apis/response/board'
+
+import dayjs from 'dayjs';
 
 
 //          component: 게시물 상세 화면 컴포넌트           //
@@ -35,11 +37,20 @@ export default function BoardDetail() {
 
   //          component: 게시물 상세 상단 컴포넌트           //
   const BoardDedtailTop = () => {
-    
+
+    //          state: 작성자 여부 상태          //
+    const [isWriter, setWriter] = useState<boolean>(false);
     //          state: 게시물 상태          //
     const [board, setBoard] = useState<Board | null>(null);
     //          state: more 버튼 상태          //
     const [showMore, setShowMore] = useState<boolean>(false);
+
+    //          function: 작성일 포맷 변경 함수          //
+    const getWriteDateTimeFormat = () => {
+      if (!board) return '';
+      const date = dayjs(board.writeDatetime);
+      return date.format('YYYY. MM. DD.');
+    }
 
     //          function: get board response 처리 함수          //
     const GetBoardResponse = (responseBody: GetBoardResponseDto | ResponseDto | null) => {
@@ -54,6 +65,13 @@ export default function BoardDetail() {
       
       const board: Board = { ...responseBody as GetBoardResponseDto}
       setBoard(board);
+
+      if (!loginUser) {
+        setWriter(false);
+        return;
+      }
+      const isWriter = loginUser.email === board.writerEmail;
+      setWriter(isWriter);
     }
 
     //          event handler: 닉네임 클릭 이벤트 처리           //
@@ -99,11 +117,14 @@ export default function BoardDetail() {
               <div className='board-detail-writer-profile-image' style={{backgroundImage: `url(${board.writerProfileImage ? board. writerProfileImage : defaultProfileImage})`}}></div>
               <div className='board-detail-writer-nickname' onClick={onNicknameClickHandler}>{board.writerNickname}</div>
               <div className='board-detail-info-divider'>{'\|'}</div>
-              <div className='board-detail-write-date'>{board.writeDatetime}</div>
+              <div className='board-detail-write-date'>{getWriteDateTimeFormat()}</div>
             </div>
+            {isWriter && 
             <div className='icon-button' onClick={onMoreButtonClickHandler}>
               <div className='icon more-icon'></div>
             </div>
+            }
+            
             {showMore &&
             <div className='board-detail-more-box'>
               <div className='board-detail-update-button' onClick={onUpdateButtonClickHandler}>{'수정'}</div>
@@ -222,7 +243,8 @@ export default function BoardDetail() {
           <div className='board-detail-bottom-comment-pagination-box'>
             <Pagination />
           </div>
-          <div className='board-detail-bottom-comment-input-box'>
+          {loginUser !== null && 
+            <div className='board-detail-bottom-comment-input-box'>
             <div className='board-detail-bottom-comment-input-container'>
               <textarea ref={commentRef} className='board-detail-bottom-comment-textarea' placeholder='댓글을 작성해주세요.' value={comment} onChange={onCommentChangeHandler} />
               <div className='board-detail-bottom-comment-button-box'>
@@ -230,9 +252,9 @@ export default function BoardDetail() {
               </div>
             </div>
           </div>
+          }
         </div>
         }
-        
       </div>
     )
   }
