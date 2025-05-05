@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
+import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
 import com.jino.board_back.domain.board.entity.BoardEntity;
 import com.jino.board_back.domain.board.repository.BoardRepository;
@@ -83,10 +84,6 @@ public class BoardServiceImplement implements BoardService {
 
             imageEntities = imageRepository.findByBoardNumber(boardNumber);
 
-            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
-            boardEntity.increaseViewCount();
-            boardRepository.save(boardEntity);
-
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
@@ -143,6 +140,22 @@ public class BoardServiceImplement implements BoardService {
             return ResponseDto.databaseError();
         }
         return GetFavoriteListResponseDto.success(resultSets);
+    }
+
+    @Override
+    public ResponseEntity<? super IncreaseViewCountResponsDto> increaseViewCount(Integer boardNumber) {
+        try {
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if (boardEntity == null)
+                return IncreaseViewCountResponsDto.noExistBoard();
+
+            boardEntity.increaseViewCount();
+            boardRepository.save(boardEntity);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return IncreaseViewCountResponsDto.success();
     }
 
 }

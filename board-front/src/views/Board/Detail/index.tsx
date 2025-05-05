@@ -9,9 +9,10 @@ import defaultProfileImage from 'assets/image/default-profile-image.png';
 import { useLoginUserStore } from 'stores'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant'
-import { GetBoardRequest } from 'apis'
+import { getBoardRequest, increaseViewCountRequest } from 'apis'
 import GetBoardResponseDto from 'apis/response/board/get-board.response.dto'
 import { ResponseDto } from 'apis/response'
+import { IncreaseViewCountResponseDto } from 'apis/response/board'
 
 
 //          component: 게시물 상세 화면 컴포넌트           //
@@ -24,6 +25,13 @@ export default function BoardDetail() {
 
   //          function: 네비게이트 함수          //
   const navigator = useNavigate();
+  //          function: increase view count response 처리 함수          //
+  const increaseViewCountResponse = (responseBody: IncreaseViewCountResponseDto | ResponseDto | null) => {
+    if (!responseBody) return;
+    const { code } = responseBody;
+    if (code === 'NB') alert('존재하지 않는 게시물 입니다.');
+      if (code === 'DBE') alert('데이터베이스 오류입니다.')
+  }
 
   //          component: 게시물 상세 상단 컴포넌트           //
   const BoardDedtailTop = () => {
@@ -77,7 +85,7 @@ export default function BoardDetail() {
         navigator(MAIN_PATH());
         return;
       }
-      GetBoardRequest(boardNumber).then(GetBoardResponse);
+      getBoardRequest(boardNumber).then(GetBoardResponse);
     }, [boardNumber]);
 
     //          render: 게시물 상세 상단 컴포넌트 렌더링           //
@@ -228,6 +236,18 @@ export default function BoardDetail() {
       </div>
     )
   }
+
+  //          effect: 게시물 번호 path variable이 바뀔때 마다 게시물 조회수 증가          //
+  let effectFlag = true;
+  useEffect(() => {
+    if (!boardNumber) return;
+    if (effectFlag) {
+      effectFlag = false;
+      return;
+    }
+
+    increaseViewCountRequest(boardNumber).then(increaseViewCountResponse);
+  }, [boardNumber])
 
   //          render: 게시물 상세 화면 컴포넌트 렌더링           //
   return (

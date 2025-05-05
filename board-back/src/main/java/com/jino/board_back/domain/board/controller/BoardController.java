@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
+import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
 import com.jino.board_back.domain.board.service.BoardService;
 import com.jino.board_back.domain.comment.dto.request.PostCommentRequestDto;
@@ -57,9 +58,12 @@ public class BoardController {
         return response;
     }
 
-    @PatchMapping("/{boardNumber}/increase-view-count")
-    public ResponseEntity<> increaseViewCount(@PathVariable("boardNumber") Integer boardNumber) {
+    @GetMapping("/{boardNumber}/increase-view-count")
+    public ResponseEntity<? super IncreaseViewCountResponsDto> increaseViewCount(
+            @PathVariable("boardNumber") Integer boardNumber) {
 
+        ResponseEntity<? super IncreaseViewCountResponsDto> response = boardService.increaseViewCount(boardNumber);
+        return response;
     }
 
 }
