@@ -13,15 +13,12 @@ import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
 import com.jino.board_back.domain.board.service.BoardService;
-import com.jino.board_back.domain.comment.dto.request.PostCommentRequestDto;
-import com.jino.board_back.domain.comment.dto.response.PostCommentResponseDto;
 import com.jino.board_back.domain.favorite.dto.response.GetFavoriteListResponseDto;
 import com.jino.board_back.domain.favorite.dto.response.PutFavoriteResponseDto;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
