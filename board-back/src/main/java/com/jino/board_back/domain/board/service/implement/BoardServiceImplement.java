@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
+import com.jino.board_back.domain.board.dto.response.DeleteBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
@@ -158,4 +159,32 @@ public class BoardServiceImplement implements BoardService {
         return IncreaseViewCountResponsDto.success();
     }
 
+    @Override
+    public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber, String email) {
+        try {
+            boolean existedUser = userRepository.existsByEmail(email);
+            if (!existedUser)
+                return DeleteBoardResponseDto.noExistUser();
+
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if (boardEntity == null)
+                return DeleteBoardResponseDto.noExistBoard();
+
+            String writerEmail = boardEntity.getWriterEmail();
+            boolean isWriter = writerEmail.equals(email);
+            if (!isWriter)
+                return DeleteBoardResponseDto.noPermission();
+
+            imageRepository.deleteByBoardNumber(boardNumber);
+            commentRepository.deleteByBoardNumber(boardNumber);
+            favoriteRepository.deleteByBoardNumber(boardNumber);
+
+            boardRepository.delete(boardEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return DeleteBoardResponseDto.success();
+    }
 }

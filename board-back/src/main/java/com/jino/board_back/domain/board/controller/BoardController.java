@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
+import com.jino.board_back.domain.board.dto.response.DeleteBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
@@ -18,6 +19,8 @@ import com.jino.board_back.domain.favorite.dto.response.PutFavoriteResponseDto;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -60,6 +63,13 @@ public class BoardController {
             @PathVariable("boardNumber") Integer boardNumber) {
 
         ResponseEntity<? super IncreaseViewCountResponsDto> response = boardService.increaseViewCount(boardNumber);
+        return response;
+    }
+
+    @DeleteMapping("/{boardNumber}")
+    public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(
+            @PathVariable("boardNumber") Integer boardNumber, @AuthenticationPrincipal String email) {
+        ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(boardNumber, email);
         return response;
     }
 
