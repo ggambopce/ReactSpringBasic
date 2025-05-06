@@ -8,14 +8,16 @@ import defaultProfileImage from 'assets/image/default-profile-image.png';
 import { useLoginUserStore } from 'stores'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant'
-import { getBoardRequest, getCommentListRequest, getFavoriteListRequest, increaseViewCountRequest, putFavoriteRequest } from 'apis'
+import { getBoardRequest, getCommentListRequest, getFavoriteListRequest, increaseViewCountRequest, postCommnetRequest, putFavoriteRequest } from 'apis'
 import GetBoardResponseDto from 'apis/response/board/get-board.response.dto'
 import { ResponseDto } from 'apis/response'
-import { GetCommentListResponseDto, GetFavoriteListResponseDto, IncreaseViewCountResponseDto, PutFavoriteResponseDto } from 'apis/response/board'
+import { GetCommentListResponseDto, GetFavoriteListResponseDto, IncreaseViewCountResponseDto, PostCommentResponseDto, PutFavoriteResponseDto } from 'apis/response/board'
 
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs'
 import { useCookies } from 'react-cookie'
+import { boardMock } from 'mocks'
+import { PostCommentRequestDto } from 'apis/request/board'
 dayjs.extend(customParseFormat);
 
 
@@ -208,10 +210,27 @@ export default function BoardDetail() {
       if (code === 'DBE') alert('데이터베이스 오류입니다.')
       if (code !== 'SU') return;
 
+      setComment('');
+
       if (!boardNumber) return;
       getFavoriteListRequest(boardNumber).then(getFavoriteListResponse);
     }
+    //          function: post comment response 처리 함수          //
+    const postCommnetResponse  = (responseBody: PostCommentResponseDto | ResponseDto | null) => {
+      if (!responseBody) return;
+      const { code } = responseBody;
+      if (code === 'VF') alert('잘못된 접근입니다.')
+      if (code === 'NU') alert('존재하지 않는 유저입니다.');
+      if (code === 'NB') alert('존재하지 않는 게시물입니다.');
+      if (code === 'AF') alert('인증에 실패했습니다.')
+      if (code === 'DBE') alert('데이터베이스 오류입니다.')
+      if (code !== 'SU') return;
 
+      if (!boardNumber) return;
+      getCommentListRequest(boardNumber).then(getCommentListResponse);
+
+    }
+    
     //          event handler: 좋아요 클릭 이벤트 처리           //
     const onFavoriteClickHandler = () => {
       if (!loginUser || !cookies.accessToken || !boardNumber) return;
@@ -228,8 +247,9 @@ export default function BoardDetail() {
     }
      //          event handler: 댓글 작성 버튼 클릭 이벤트 처리           //
      const onCommentSubmitButtonClickHandler = () => {
-      if (!comment) return;
-      alert('!!');
+      if (!comment || !boardNumber || !loginUser || !cookies.accessToken) return;
+      const requestBody: PostCommentRequestDto = { content: comment};
+      postCommnetRequest(boardNumber, requestBody, cookies.accessToken).then(postCommnetResponse);
     }
     //          event handler: 댓글 변경 이벤트 처리           //
     const onCommentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {

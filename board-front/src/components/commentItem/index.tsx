@@ -18,7 +18,7 @@ export default function CommentItem({ commentListItem }: Props) {
 
   //            function: 작성일 경과시간 함수          //
   const getElapsedTime = () => {
-    const now = dayjs().add(9, 'hour');
+    const now = dayjs();
     const raw = commentListItem.writeDatetime;
     const date = dayjs(raw, 'YY-MM-DD HH:mm:ss');
     const writeTime = dayjs(date);
