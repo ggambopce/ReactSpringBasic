@@ -2,19 +2,20 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css'
 import FavoriteItem from 'components/favoriteItem'
 import { Board, CommentListItemType, FavoriteListItemType } from 'types/interface'
-import { commentListMock, favoriteListMock } from 'mocks'
 import CommentItem from 'components/commentItem'
 import Pagination from 'components/pagination'
 import defaultProfileImage from 'assets/image/default-profile-image.png';
 import { useLoginUserStore } from 'stores'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant'
-import { getBoardRequest, getFavoriteListRequest, increaseViewCountRequest } from 'apis'
+import { getBoardRequest, getCommentListRequest, getFavoriteListRequest, increaseViewCountRequest } from 'apis'
 import GetBoardResponseDto from 'apis/response/board/get-board.response.dto'
 import { ResponseDto } from 'apis/response'
-import { GetFavoriteListResponseDto, IncreaseViewCountResponseDto } from 'apis/response/board'
+import { GetCommentListResponseDto, GetFavoriteListResponseDto, IncreaseViewCountResponseDto } from 'apis/response/board'
 
-import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import dayjs from 'dayjs'
+dayjs.extend(customParseFormat);
 
 
 //          component: 게시물 상세 화면 컴포넌트           //
@@ -48,8 +49,9 @@ export default function BoardDetail() {
     //          function: 작성일 포맷 변경 함수          //
     const getWriteDateTimeFormat = () => {
       if (!board) return '';
-      const date = dayjs(board.writeDatetime);
-      return date.format('YYYY. MM. DD.');
+      const raw = board.writeDatetime;
+      const date = dayjs(raw, 'YY-MM-DD HH:mm:ss'); // ← 포맷 명시
+      return date.isValid() ? date.format('YYYY. MM. DD.') : '날짜 오류';
     }
 
     //          function: get board response 처리 함수          //
@@ -173,6 +175,24 @@ export default function BoardDetail() {
 
       const { favoriteList } = responseBody as GetFavoriteListResponseDto;
       setFavoriteList(favoriteList);
+
+      if (!loginUser) {
+        setFavorite(false);
+        return;
+      }
+      const isFavorite = favoriteList.findIndex(favorite => favorite.email === loginUser.email) !== -1;
+      setFavorite(isFavorite);
+    }
+    //          function: get comment list response 처리 함수          //
+    const getCommentListResponse = (responseBody: GetCommentListResponseDto | ResponseDto | null) => {
+      if (!responseBody) return;
+      const { code } = responseBody;
+      if (code === 'NB') alert('존재하지 않는 게시물 입니다.');
+      if (code === 'DBE') alert('데이터베이스 오류입니다.')
+      if (code !== 'SU') return;
+
+      const { commentList } = responseBody as GetCommentListResponseDto;
+      setCommentList(commentList);
     }
 
     //          event handler: 좋아요 클릭 이벤트 처리           //
@@ -206,7 +226,7 @@ export default function BoardDetail() {
     useEffect(() => {
       if (!boardNumber) return;
       getFavoriteListRequest(boardNumber).then(getFavoriteListResponse);
-      setCommentList(commentListMock);
+      getCommentListRequest(boardNumber).then(getCommentListResponse);
     }, [boardNumber]);
 
     //          render: 게시물 상세 하단 컴포넌트 렌더링           //
