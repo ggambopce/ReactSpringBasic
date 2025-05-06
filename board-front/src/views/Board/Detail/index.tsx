@@ -8,10 +8,10 @@ import defaultProfileImage from 'assets/image/default-profile-image.png';
 import { useLoginUserStore } from 'stores'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant'
-import { getBoardRequest, getCommentListRequest, getFavoriteListRequest, increaseViewCountRequest, postCommnetRequest, putFavoriteRequest } from 'apis'
+import { deleteBoardRequest, getBoardRequest, getCommentListRequest, getFavoriteListRequest, increaseViewCountRequest, postCommnetRequest, putFavoriteRequest } from 'apis'
 import GetBoardResponseDto from 'apis/response/board/get-board.response.dto'
 import { ResponseDto } from 'apis/response'
-import { GetCommentListResponseDto, GetFavoriteListResponseDto, IncreaseViewCountResponseDto, PostCommentResponseDto, PutFavoriteResponseDto } from 'apis/response/board'
+import { DeleteBoardResponseDto, GetCommentListResponseDto, GetFavoriteListResponseDto, IncreaseViewCountResponseDto, PostCommentResponseDto, PutFavoriteResponseDto } from 'apis/response/board'
 
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs'
@@ -81,6 +81,21 @@ export default function BoardDetail() {
       setWriter(isWriter);
     }
 
+    //          function: delete board response 처리 함수          //
+    const deleteBoardResponse = (responseBody: DeleteBoardResponseDto | ResponseDto | null ) => {
+      if (!responseBody) return;
+      const { code } = responseBody;
+      if (code === 'VF') alert('잘못된 접근입니다.')
+      if (code === 'NU') alert('존재하지 않는 유저입니다.');
+      if (code === 'NB') alert('존재하지 않는 게시물입니다.');
+      if (code === 'NP') alert('권한이 없습니다.');
+      if (code === 'AF') alert('인증에 실패했습니다.')
+      if (code === 'DBE') alert('데이터베이스 오류입니다.')
+      if (code !== 'SU') return;
+
+      navigator(MAIN_PATH());
+    }
+    
     //          event handler: 닉네임 클릭 이벤트 처리           //
     const onNicknameClickHandler = () => {
       if (!board) return;
@@ -98,10 +113,10 @@ export default function BoardDetail() {
     }
     //          event handler: 삭제 버튼 클릭 이벤트 처리          //
     const onDeleteButtonClickHandler = () => {
-      if (!board || !loginUser) return;
+      if (!boardNumber || !board || !loginUser || !cookies.accessToken) return;
       if (loginUser.email !== board.writerEmail) return;
-      // TODO: Delete Request
-      navigator(MAIN_PATH());
+      
+      deleteBoardRequest(boardNumber, cookies.accessToken).then(deleteBoardResponse);
     }
 
     //          effect: 게시물 번호 path variable이 바뀔때 마다 게시물 불러오기          //
