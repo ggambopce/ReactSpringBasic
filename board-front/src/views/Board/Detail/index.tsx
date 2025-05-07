@@ -85,11 +85,11 @@ export default function BoardDetail() {
     const deleteBoardResponse = (responseBody: DeleteBoardResponseDto | ResponseDto | null ) => {
       if (!responseBody) return;
       const { code } = responseBody;
-      if (code === 'VF') alert('잘못된 접근입니다.')
+      if (code === 'VF') alert('잘못된 접근입니다.');
       if (code === 'NU') alert('존재하지 않는 유저입니다.');
       if (code === 'NB') alert('존재하지 않는 게시물입니다.');
+      if (code === 'AF') alert('인증에 실패했습니다.');
       if (code === 'NP') alert('권한이 없습니다.');
-      if (code === 'AF') alert('인증에 실패했습니다.')
       if (code === 'DBE') alert('데이터베이스 오류입니다.')
       if (code !== 'SU') return;
 
@@ -331,7 +331,7 @@ export default function BoardDetail() {
             <Pagination />
           </div>
           {loginUser !== null && 
-            <div className='board-detail-bottom-comment-input-box'>
+          <div className='board-detail-bottom-comment-input-box'>
             <div className='board-detail-bottom-comment-input-container'>
               <textarea ref={commentRef} className='board-detail-bottom-comment-textarea' placeholder='댓글을 작성해주세요.' value={comment} onChange={onCommentChangeHandler} />
               <div className='board-detail-bottom-comment-button-box'>

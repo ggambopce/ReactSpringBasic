@@ -30,7 +30,7 @@ export default function CommentItem({ commentListItem }: Props) {
     return `${Math.floor(gap / 86400)}일 전`;
   }
 
-  //            render: Commnet List Item 컴포넌트 랜더링           //  
+  //            render: Commnet List Item 컴포넌트 랜더링           //
   return (
     <div>
         <div className='comment-list-item'>
