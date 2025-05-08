@@ -1,6 +1,5 @@
 package com.jino.board_back.domain.board.service;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 
 import com.jino.board_back.domain.board.dto.request.PatchBoardRequestDto;
