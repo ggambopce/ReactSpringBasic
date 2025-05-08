@@ -26,7 +26,7 @@ public class PatchBoardResponseDto extends ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
 
-    public static ResponseEntity<ResponseDto> notExistUser() {
+    public static ResponseEntity<ResponseDto> noExistUser() {
         ResponseDto result = new ResponseDto((ResponseCode.NOT_EXISTED_USER), ResponseMessage.NOT_EXISTED_USER);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
     }
