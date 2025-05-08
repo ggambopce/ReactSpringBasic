@@ -4,9 +4,9 @@ import { useBoardStore, useLoginUserStore } from 'stores';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MAIN_PATH } from 'constant';
 import { useCookies } from 'react-cookie';
-import { getBoardRequest } from 'apis';
 import { GetBoardResponseDto } from 'apis/response/board';
 import { ResponseDto } from 'apis/response';
+import { getBoardRequest } from 'apis';
 
 //          component: 게시물 수정 화면 컴포넌트           //
 export default function BoardUpdate() {
@@ -20,14 +20,14 @@ export default function BoardUpdate() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   //          state: 게시물 번호 path variable 상태          //
-  const { boardNubmer } = useParams();
+  const { boardNumber } = useParams();
+
   //          state: 게시물 상태          //
   const { title, setTitle } = useBoardStore();
   const { content, setContent } = useBoardStore();
   const { boardImageFileList, setBoardImageFileList } = useBoardStore();
   //          state: 로그인 유저 상태          //
   const { loginUser } = useLoginUserStore();
-
   //          state: 쿠키 상태          //
   const [cookies, setCookies] = useCookies();
 
@@ -36,31 +36,28 @@ export default function BoardUpdate() {
 
   //          function: 네비게이트 함수         //
   const navigator = useNavigate();
-  //          function: get board response 함수          //
-  const getBoardResponse = (responseBody: GetBoardResponseDto | ResponseDto | null) => {
-    if (!responseBody) return;
-    const { code } = responseBody;
-    if (code === 'NB') alert('존재하지 않는 게시물 입니다.');
-    if (code === 'DBE') alert('데이터베이스 오류입니다.')
-    if (code !== 'SU') {
-      navigator(MAIN_PATH())
-      return;
-    }
 
-    const { title, content, boardImageList, writerEmail } = responseBody as GetBoardResponseDto;
-    setTitle(title);
-    setContent(content);
-    setImageUrls(boardImageList);
+  //          function: get board response 처리 함수          //
+      const getBoardResponse = (responseBody: GetBoardResponseDto | ResponseDto | null) => {
+        if (!responseBody) return;
+        const { code } = responseBody;
+        if (code === 'NB') alert('존재하지 않는 게시물 입니다.');
+        if (code === 'DBE') alert('데이터베이스 오류입니다.')
+        if (code !== 'SU') {
+          navigator(MAIN_PATH())
+          return;
+        }
 
-    if (!loginUser || loginUser.email !== writerEmail) {
-      navigator(MAIN_PATH());
-      return;
-    }
+        const { title, content, boardImageList, writerEmail } = responseBody as GetBoardResponseDto;
+        setTitle(title);
+        setContent(content);
+        setImageUrls(boardImageList);
 
-    
-
-  }
-
+        if (!loginUser || loginUser.email !== writerEmail) {
+          navigator(MAIN_PATH());
+          return;
+        }
+      }
   //          event handler: 제목 변경 이벤트 처리          //
   const onTitleChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
@@ -121,10 +118,10 @@ export default function BoardUpdate() {
       navigator(MAIN_PATH());
       return;
     }
-    if (!boardNubmer) return;
-    getBoardRequest(boardNubmer).then(getBoardResponse);
-
-  },[boardNubmer]);
+    if (!boardNumber) return;
+    getBoardRequest(boardNumber).then(getBoardResponse);
+    
+  },[boardNumber]);
 
   //          render: 게시물 수정 화면 컴포넌트 렌더링           //
   return (
@@ -157,3 +154,4 @@ export default function BoardUpdate() {
     </div>
   )
 }
+      

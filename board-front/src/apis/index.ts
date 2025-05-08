@@ -76,7 +76,7 @@ export const increaseViewCountRequest = async (boardNumber: number | string) => 
         })
         .catch(error => {
             if (!error.response) return null;
-            const responseBody: ResponseDto = error.respose.data;
+            const responseBody: ResponseDto = error.response.data;
             return responseBody;
         })
     return result;
@@ -124,7 +124,7 @@ export const postBoardRequest = async (requestBody: PostBoardRequestDto, accessT
     return result;
 } 
 
-export const postCommnetRequest = async (boardNumber: number | string, requestBody: PostCommentRequestDto, accessToken: string) => {
+export const postCommentRequest = async (boardNumber: number | string, requestBody: PostCommentRequestDto, accessToken: string) => {
     const result = await axios.post(POST_COMMENT_URL(boardNumber), requestBody ,authorization(accessToken))
         .then(response => {
             const responseBody: PostCommentResponseDto = response.data;
@@ -176,8 +176,8 @@ export const getSignInUserRequest = async (accessToken: string) => {
             return responseBody;
         })
         .catch(error => {
-            const reponseBody: ResponseDto = error.response.data;
-            return reponseBody;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
         });
     return result;
 }
