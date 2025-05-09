@@ -10,4 +10,7 @@ import com.jino.board_back.domain.view.entity.BoardListViewEntity;
 public interface BoardListViewRepository extends JpaRepository<BoardListViewEntity, Integer> {
 
     List<BoardListViewEntity> findByOrderByWriteDatetimeDesc();
+
+    List<BoardListViewEntity> findTop3ByWriteDateTimeGreaterThanOrderByFavoriteCountDescCommentCountDescViewCountDescWriteDateTimeDesc(
+            String writeDateTime);
 }

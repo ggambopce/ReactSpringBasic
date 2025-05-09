@@ -7,6 +7,7 @@ import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
 import com.jino.board_back.domain.board.dto.response.DeleteBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetLatestBoardListResponseDto;
+import com.jino.board_back.domain.board.dto.response.GetTop3BoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PatchBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
@@ -23,6 +24,8 @@ public interface BoardService {
             String email);
 
     ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList();
+
+    ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList();
 
     ResponseEntity<? super PutFavoriteResponseDto> putFavorite(Integer boardNumber, String email);
 
