@@ -41,7 +41,8 @@ public class WebSecurityConfig {
                                                 .requestMatchers("/", "/api/v1/auth/**", "/api/v1/search/**",
                                                                 "/file/**")
                                                 .permitAll()
-                                                .requestMatchers(HttpMethod.GET, "/api/v1/board/**", "/api/v1/user/**")
+                                                .requestMatchers(HttpMethod.GET, "/api/v1/board/**", "/api/v1/user/**",
+                                                                "/api/v1/search/**")
                                                 .permitAll()
                                                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
                                 )
