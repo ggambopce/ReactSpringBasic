@@ -12,6 +12,7 @@ import com.jino.board_back.domain.board.dto.request.PatchBoardRequestDto;
 import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
 import com.jino.board_back.domain.board.dto.response.DeleteBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
+import com.jino.board_back.domain.board.dto.response.GetLatestBoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PatchBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
@@ -41,7 +42,13 @@ public class BoardController {
         return response;
     }
 
-    @GetMapping("/{boardNumber}")
+    @GetMapping("/latest-list")
+    public ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList() {
+        ResponseEntity<? super GetLatestBoardListResponseDto> response = boardService.getLatestBoardList();
+        return response;
+    }
+
+    @GetMapping("/detail/{boardNumber}")
     public ResponseEntity<? super GetBoardResponseDto> getBoard(@PathVariable("boardNumber") Integer boardNumber) {
         ResponseEntity<? super GetBoardResponseDto> response = boardService.getBoard(boardNumber);
         return response;

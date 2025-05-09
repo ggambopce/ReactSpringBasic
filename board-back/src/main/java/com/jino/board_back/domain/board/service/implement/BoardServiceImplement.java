@@ -246,6 +246,6 @@ public class BoardServiceImplement implements BoardService {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
-        return GetLatestBoardListResponseDto.success(null);
+        return GetLatestBoardListResponseDto.success(boardListViewEntities);
     }
 }

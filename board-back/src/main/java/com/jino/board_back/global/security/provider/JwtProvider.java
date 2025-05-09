@@ -38,6 +38,7 @@ public class JwtProvider {
     }
 
     public String validate(String jwt) {
+
         try {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(key)

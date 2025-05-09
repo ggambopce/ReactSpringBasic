@@ -40,11 +40,8 @@ public class WebSecurityConfig {
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/", "/api/v1/auth/**", "/api/v1/search/**",
                                                                 "/file/**")
-                                                .permitAll() // 로그인,
-                                                             // 회원가입 등
-                                                             // 인증 없이
-                                                             // 접근 허용
-                                                .requestMatchers(HttpMethod.GET, "/api/v1/board/**", "/api/v1/user/*")
+                                                .permitAll()
+                                                .requestMatchers(HttpMethod.GET, "/api/v1/board/**", "/api/v1/user/**")
                                                 .permitAll()
                                                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
                                 )
