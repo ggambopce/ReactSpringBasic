@@ -10,6 +10,7 @@ import com.jino.board_back.domain.board.dto.request.PatchBoardRequestDto;
 import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
 import com.jino.board_back.domain.board.dto.response.DeleteBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
+import com.jino.board_back.domain.board.dto.response.GetLatestBoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PatchBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
@@ -29,6 +30,8 @@ import com.jino.board_back.domain.favorite.repository.resultSet.GetFavoriteListR
 import com.jino.board_back.domain.image.entity.ImageEntity;
 import com.jino.board_back.domain.image.repository.ImageRepository;
 import com.jino.board_back.domain.user.repository.UserRepository;
+import com.jino.board_back.domain.view.entity.BoardListViewEntity;
+import com.jino.board_back.domain.view.repository.BoardListViewRepository;
 import com.jino.board_back.global.dto.response.ResponseDto;
 
 import lombok.RequiredArgsConstructor;
@@ -42,6 +45,7 @@ public class BoardServiceImplement implements BoardService {
     private final ImageRepository imageRepository;
     private final FavoriteRepository favoriteRepository;
     private final CommentRepository commentRepository;
+    private final BoardListViewRepository boardListViewRepository;
 
     @Override
     public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
@@ -49,7 +53,7 @@ public class BoardServiceImplement implements BoardService {
         try {
             boolean existedEmail = userRepository.existsByEmail(email);
             if (!existedEmail)
-                return PostBoardResponseDto.notExistUser();
+                return PostBoardResponseDto.noExistUser();
 
             BoardEntity boardEntity = new BoardEntity(dto, email);
             boardRepository.save(boardEntity);
@@ -225,8 +229,23 @@ public class BoardServiceImplement implements BoardService {
 
         } catch (Exception exception) {
             exception.printStackTrace();
+            return ResponseDto.databaseError();
         }
 
         return PatchBoardResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList() {
+
+        List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+
+        try {
+            boardListViewEntities = boardListViewRepository.findByOrderByWriteDatetimeDesc();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetLatestBoardListResponseDto.success(null);
     }
 }
