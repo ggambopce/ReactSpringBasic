@@ -265,7 +265,7 @@ public class BoardServiceImplement implements BoardService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String sevenDaysAgo = simpleDateFormat.format(beforeWeek);
             boardListViewEntities = boardListViewRepository
-                    .findTop3ByWriteDateTimeGreaterThanOrderByFavoriteCountDescCommentCountDescViewCountDescWriteDateTimeDesc(
+                    .findTop3ByWriteDatetimeGreaterThanOrderByFavoriteCountDescCommentCountDescViewCountDescWriteDatetimeDesc(
                             sevenDaysAgo);
         } catch (Exception exception) {
             exception.printStackTrace();
