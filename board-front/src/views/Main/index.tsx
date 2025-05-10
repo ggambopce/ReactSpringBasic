@@ -6,6 +6,10 @@ import { BoardListItemType } from 'types/interface';
 import BoardListItem from 'components/boardListItem';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH_PATH } from 'constant';
+import { getTop3BoardListRequest} from 'apis';
+import { ResponseCode } from 'types/enum';
+import { GetTop3BoardListResponseDto } from 'apis/response/board';
+import { ResponseDto } from 'apis/response';
 
 //          component: 메인 화면 컴포넌트           //
 export default function Main() {
@@ -19,9 +23,20 @@ export default function Main() {
     //          state: 주간 top3 게시물 리스트 상태          //
     const [top3BoardList, setTop3BoardList] = useState<BoardListItemType[]>([]);
 
+    //          function: get top 3 board list response 처리 함수          //
+    const getTop3BoardListResponse = (responseBody: GetTop3BoardListResponseDto | ResponseDto | null) => {
+      if (!responseBody) return;
+      const { code } = responseBody;
+      if (code === 'DBE') alert('데이터베이스 오류입니다.')
+      if (code !== 'SU') return;
+
+      const { top3List } = responseBody as GetTop3BoardListResponseDto;
+      setTop3BoardList(top3List);
+    }
+
     //          effect: 첫 마운트 시 실행될 함수          //
     useEffect(() => {
-      setTop3BoardList(top3BoardListMock);
+      getTop3BoardListRequest().then(getTop3BoardListResponse);
     }, []);
 
     //          render: 메인 화면 상단 컴포넌트 렌더링          //
@@ -55,8 +70,7 @@ export default function Main() {
 
     //          effect: 첫 마운트 시 실행될 함수          //
     useEffect(() => {
-      setCurrentBoardList(latesBoardListMock);
-      setPopularWordList(['안녕', '잘가', '또 봐']);
+      
     }, []);
 
     //          render: 메인 화면 하단 컴포넌트 렌더링          //

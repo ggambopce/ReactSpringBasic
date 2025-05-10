@@ -47,8 +47,8 @@ export const SignUpRequest = async (requestBody: SignUpRequestDto) => {
 }
 
 const GET_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}`;
-const GET_LATEST_BOARD_LIST_URL = () => `$(API_DOMAIN)/board/latest-list`;
-const GET_TOP_3_BOARD_LIST_URL = () => `$(API_DOMAIN)/board/top-3`;
+const GET_LATEST_BOARD_LIST_URL = () => `${API_DOMAIN}/board/latest-list`;
+const GET_TOP_3_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3`;
 const INCREASE_VIEW_COUNT_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/increase-view-count`;
 const GET_FAVORITE_LIST_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/favorite-list`;
 const GET_COMMENT_LIST_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/comment-list`;
@@ -85,7 +85,7 @@ export const getLatestBoardListRequest = async () => {
     return result;    
 }
 
-export const GetTop3BoardListRequest = async () => {
+export const getTop3BoardListRequest = async () => {
     const result = await axios.get(GET_TOP_3_BOARD_LIST_URL())
         .then(response => {
             const responseBody: GetTop3BoardListResponseDto = response.data;
@@ -149,7 +149,7 @@ export const postBoardRequest = async (requestBody: PostBoardRequestDto, accessT
         })
         .catch(error => {
             if (!error.response) return null;
-            const responseBody: ResponseDto = error.respose.data;
+            const responseBody: ResponseDto = error.response.data;
             return responseBody;
         })
     return result;
@@ -199,7 +199,7 @@ export const deleteBoardRequest = async (boardNumber: number | string, accessTok
 
 const GET_POPULAR_LIST_URL = () => `${API_DOMAIN}/search/popular-list`;
 
-export const GetPopularListRequest = async () => {
+export const getPopularListRequest = async () => {
     const result = await axios.get(GET_POPULAR_LIST_URL())
         .then(response => {
             const responseBody: GetPopularListResponseDto = response.data;
