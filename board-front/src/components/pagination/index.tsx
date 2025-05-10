@@ -6,7 +6,7 @@ interface Props {
   currentPage: number,
   currentSection: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
-  setCUrrentSection: Dispatch<SetStateAction<number>>;
+  setCurrentSection: Dispatch<SetStateAction<number>>;
 
   viewPageList: number[];
   totalSection: number;
@@ -17,7 +17,7 @@ export default function pagination(props: Props) {
 
     //          state: Properties          //
     const { currentPage, currentSection, viewPageList, totalSection } = props;
-    const { setCurrentPage, setCUrrentSection } = props;
+    const { setCurrentPage, setCurrentSection } = props;
 
     //          event handler: 페이지 번호 클릭 이벤트 처리        //
     const onPageClickHandler = (page: number) => {
@@ -27,13 +27,13 @@ export default function pagination(props: Props) {
      const onPreviousClickHandler = () => {
       if (currentSection === 1) return;
       setCurrentPage((currentSection - 1) * 10);
-      setCUrrentSection(currentSection - 1);
+      setCurrentSection(currentSection - 1);
      }
      //          event handler: 다음 클릭 이벤트 처리        //
      const onNextClickHandler = () => {
       if (currentSection === totalSection) return;
       setCurrentPage(currentSection * 10 + 1);
-      setCUrrentSection(currentSection + 1);
+      setCurrentSection(currentSection + 1);
      }
   
     //          render: 페이지네이션 컴포넌트 랜더링           //

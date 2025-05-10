@@ -339,7 +339,7 @@ export default function BoardDetail() {
               currentPage={currentPage}
               currentSection={currentSection}
               setCurrentPage={setCurrentPage}
-              setCUrrentSection={setCurrentSection}
+              setCurrentSection={setCurrentSection}
               viewPageList={viewPageList}
               totalSection={totalSection}
 
