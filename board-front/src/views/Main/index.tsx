@@ -23,7 +23,7 @@ export default function Main() {
     return (
       <div id='main-top-wrapper'>
         <div className='main-top-container'>
-          <div className='main-top-intro'>{'JINOs 개발이야기에\n 공부하며 남기고 싶은 정보를 담아봅니다.'}</div>
+          <div className='main-top-title'>{'JINOs 개발이야기\n 공부하며 남기고 싶은 정보를 담아봅니다.'}</div>
           <div className='main-top-contents-box'>
             <div className='main-top-contents-title'>{'주간 TOP 3 게시글'}</div>
             <div className='main-top-contents'>
@@ -60,7 +60,7 @@ export default function Main() {
             </div>
             <div className='main-bottom-popular-box'>
               <div className='main-bottom-popular-card'>
-                <div className='main-bottom-popular-card-box'>
+                <div className='main-bottom-popular-card-container'>
                   <div className='main-bottom-popular-card-title'>{'인기 검색어'}</div>
                   <div className='main-bottom-popular-card-contents'>
                     {popularWordList.map( word => <div className='word-badge'>{word}</div>)}
