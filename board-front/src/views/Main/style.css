@@ -128,3 +128,10 @@
 
     gap: 12px;
 }
+
+.main-bottom-pagination-box {
+    margin-top: 60px;
+
+    display: flex;
+    justify-content: center;
+}
