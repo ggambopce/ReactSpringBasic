@@ -77,7 +77,7 @@ export default function Main() {
 
     //          function: get latest board list response 처리 함수          //
     const getLatestBoardListResponse = (responseBody: GetLatestBoardListResponseDto | ResponseDto | null) => {
-      if (!responseBody) return;
+      if (!responseBody) return;  
       const { code } = responseBody;
       if (code === 'DBE') alert('데이터베이스 오류입니다.')
       if (code !== 'SU') return;
