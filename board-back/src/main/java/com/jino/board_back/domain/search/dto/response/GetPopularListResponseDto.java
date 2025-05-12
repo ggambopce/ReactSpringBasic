@@ -1,4 +1,4 @@
-package com.jino.board_back.domain.search.dto;
+package com.jino.board_back.domain.search.dto.response;
 
 import java.util.ArrayList;
 import java.util.List;

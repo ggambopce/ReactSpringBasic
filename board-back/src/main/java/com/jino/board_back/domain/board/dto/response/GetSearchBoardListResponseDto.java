@@ -1,4 +1,4 @@
-package com.jino.board_back.domain.search.dto.response;
+package com.jino.board_back.domain.board.dto.response;
 
 import java.util.List;
 
@@ -22,7 +22,8 @@ public class GetSearchBoardListResponseDto extends ResponseDto {
         this.searchList = BoardListItem.getList(boardListViewEntities);
     }
 
-    public ResponseEntity<GetSearchBoardListResponseDto> success(List<BoardListViewEntity> boardListViewEntities) {
+    public static ResponseEntity<GetSearchBoardListResponseDto> success(
+            List<BoardListViewEntity> boardListViewEntities) {
         GetSearchBoardListResponseDto result = new GetSearchBoardListResponseDto(boardListViewEntities);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

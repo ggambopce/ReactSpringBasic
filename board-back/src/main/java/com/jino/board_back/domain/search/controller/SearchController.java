@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jino.board_back.domain.search.dto.GetPopularListResponseDto;
+import com.jino.board_back.domain.search.dto.response.GetPopularListResponseDto;
 import com.jino.board_back.domain.search.service.SearchService;
 
 import lombok.RequiredArgsConstructor;

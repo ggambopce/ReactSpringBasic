@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.jino.board_back.domain.search.dto.GetPopularListResponseDto;
+import com.jino.board_back.domain.search.dto.response.GetPopularListResponseDto;
 import com.jino.board_back.domain.search.repository.SearchLogRepository;
 import com.jino.board_back.domain.search.repository.resultSet.GetPopularListResultSet;
 import com.jino.board_back.domain.search.service.SearchService;

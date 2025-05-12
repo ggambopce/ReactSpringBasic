@@ -15,6 +15,7 @@ import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
 import com.jino.board_back.domain.board.dto.response.DeleteBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetLatestBoardListResponseDto;
+import com.jino.board_back.domain.board.dto.response.GetSearchBoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetTop3BoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PatchBoardResponseDto;
@@ -31,6 +32,8 @@ import com.jino.board_back.domain.favorite.repository.FavoriteRepository;
 import com.jino.board_back.domain.favorite.repository.resultSet.GetFavoriteListResultSet;
 import com.jino.board_back.domain.image.entity.ImageEntity;
 import com.jino.board_back.domain.image.repository.ImageRepository;
+import com.jino.board_back.domain.search.entity.SearchLogEntity;
+import com.jino.board_back.domain.search.repository.SearchLogRepository;
 import com.jino.board_back.domain.user.repository.UserRepository;
 import com.jino.board_back.domain.view.entity.BoardListViewEntity;
 import com.jino.board_back.domain.view.repository.BoardListViewRepository;
@@ -48,6 +51,7 @@ public class BoardServiceImplement implements BoardService {
     private final FavoriteRepository favoriteRepository;
     private final CommentRepository commentRepository;
     private final BoardListViewRepository boardListViewRepository;
+    private final SearchLogRepository searchLogRepository;
 
     @Override
     public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
@@ -269,5 +273,32 @@ public class BoardServiceImplement implements BoardService {
             return ResponseDto.databaseError();
         }
         return GetTop3BoardListResponseDto.success(boardListViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoadList(String searchWord,
+            String preSearchWord) {
+
+        List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+
+        try {
+
+            boardListViewEntities = boardListViewRepository
+                    .findByTitleContainsOrContentContainsOrderByWriteDatetimeDesc(searchWord, searchWord);
+
+            SearchLogEntity searchLogEntity = new SearchLogEntity(searchWord, preSearchWord, false);
+            searchLogRepository.save(searchLogEntity);
+
+            boolean relation = preSearchWord != null;
+            if (relation) {
+                searchLogEntity = new SearchLogEntity(preSearchWord, searchWord, relation);
+                searchLogRepository.save(searchLogEntity);
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetSearchBoardListResponseDto.success(boardListViewEntities);
     }
 }
