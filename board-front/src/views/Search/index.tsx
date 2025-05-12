@@ -31,6 +31,7 @@ export default function Search() {
   //          effect: 첫 마운트 시 실행될 함수          //
   useEffect(() => {
     setSearchBoardList(latesBoardListMock);
+    setRelationList(['안녕','잘가']);
   }, [searchWord]);
 
   //          render: 검색 화면 컴포넌트 렌더링           //
@@ -38,8 +39,8 @@ export default function Search() {
   return (
     <div id='search-wrapper'>
       <div className='search-container'>
-        <div className='search-title-box'>'
-          <div className='search-title'><span className='emphasis'>{searchWord}</span>{'에 대한 결과 입니다.'}</div>
+        <div className='search-title-box'>
+          <div className='search-title'><span className='search-title-emphasis'>{searchWord}</span>{'에 대한 결과 입니다.'}</div>
           <div className='search-count'>{count}</div>
         </div>
         <div className='search-contents-box'>
@@ -48,11 +49,11 @@ export default function Search() {
           <div className='search-contents'>{searchBoardList.map(boardListItem => <BoardListItem boardListItem={boardListItem} />)}</div>
           }
           <div className='search-relation-box'>
-            <div className='dearch-relation-card'>
+            <div className='search-relation-card'>
               <div className='search-relation-card-container'>
-               <div className='search-relation-card-title'></div> 
+               <div className='search-relation-card-title'>{'관련 검색어'}</div> 
                {relationList.length === 0 ? 
-               <div className='search-relation-card-contents-nothing'></div> :  
+               <div className='search-relation-card-contents-nothing'>{'관련 검색어가 없습니다.'}</div> :  
                <div className='search-erlation-card-contents'>
                {relationList.map(word => <div className='word-badge' onClick={() => onRelationWordClickHandler(word)}>{word}</div>)}
                </div>
@@ -62,7 +63,8 @@ export default function Search() {
           </div>  
         </div>
         <div className='search-pagination-box'>
-          {/*<Pagination />*/}
+          {count !==0 && {/*<Pagination />*/}}
+          
         </div>
       </div>
     </div>
