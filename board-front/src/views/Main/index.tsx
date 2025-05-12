@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './style.css'
 import Top3Item from 'components/top3Item'
-import { latesBoardListMock, top3BoardListMock } from 'mocks';
 import { BoardListItemType } from 'types/interface';
 import BoardListItem from 'components/boardListItem';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH_PATH } from 'constant';
 import { getLatestBoardListRequest, getPopularListRequest, getTop3BoardListRequest} from 'apis';
-import { ResponseCode } from 'types/enum';
 import { GetLatestBoardListResponseDto, GetTop3BoardListResponseDto } from 'apis/response/board';
 import { ResponseDto } from 'apis/response';
 import { usePagination } from 'hooks';

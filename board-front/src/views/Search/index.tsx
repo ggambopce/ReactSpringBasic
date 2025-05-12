@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './style.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BoardListItemType } from 'types/interface';
-import { latesBoardListMock } from 'mocks';
 import BoardListItem from 'components/boardListItem';
 import { SEARCH_PATH } from 'constant';
+import { getSearchBoardListRequest } from 'apis';
+import { ResponseDto } from 'apis/response';
+import GetSearchBoardListResponseDto from 'apis/response/board/get-search-board-response.dto';
+import { usePagination } from 'hooks';
 import Pagination from 'components/pagination';
 
 //          component: 검색 화면 컴포넌트           //
@@ -12,6 +15,19 @@ export default function Search() {
   
   //          state: searchWord path variable 상태          //
   const { searchWord } = useParams();
+  //          state: 페이지 네이션 관련 상태          //
+    const {
+      currentPage,
+        setCurrentPage,
+        currentSection,
+        setCurrentSection,
+        viewList,
+        viewPageList,
+        totalSection,
+        setTotalList,
+    } = usePagination<BoardListItemType>(5);
+  //          state:  이전 검색어 상태          //
+  const [preSearchWord, setPreSearchWord ]  = useState<string | null>(null);
 
   //          state: 검색 게시물 개수 상태          //
   const [count, setCount] = useState<number>(2)
@@ -22,6 +38,19 @@ export default function Search() {
 
   //          function: 네비게이트 함수          //
   const navigator = useNavigate();
+  //          function: get search board list response 처리 함수          //
+  const getSearchBoardListResponse = (responseBody: GetSearchBoardListResponseDto | ResponseDto | null) => {
+    if (!responseBody) return;
+    const {code} = responseBody;
+    if (code === 'DBE') alert('데이터베이스 오류입니다.');
+    if (code !== 'SU') return;
+
+    if (!searchWord) return;
+    const {searchList} = responseBody as GetSearchBoardListResponseDto;
+    setTotalList(searchList);
+    setCount(searchList.length);
+    setPreSearchWord(searchWord);
+  }
 
   //          event handler: 연관 검색어 클릭 이벤트 처리          //
   const onRelationWordClickHandler = (word: string) => {
@@ -30,8 +59,9 @@ export default function Search() {
 
   //          effect: 첫 마운트 시 실행될 함수          //
   useEffect(() => {
-    setSearchBoardList(latesBoardListMock);
-    setRelationList(['안녕','잘가']);
+    
+    if (!searchWord) return;
+    getSearchBoardListRequest(searchWord, preSearchWord).then(getSearchBoardListResponse)
   }, [searchWord]);
 
   //          render: 검색 화면 컴포넌트 렌더링           //
@@ -46,7 +76,7 @@ export default function Search() {
         <div className='search-contents-box'>
           {count === 0 ?
           <div className='search-contents-nothing'>{'검색 결과가 없습니다.'}</div> :
-          <div className='search-contents'>{searchBoardList.map(boardListItem => <BoardListItem boardListItem={boardListItem} />)}</div>
+          <div className='search-contents'>{viewList.map(boardListItem => <BoardListItem boardListItem={boardListItem} />)}</div>
           }
           <div className='search-relation-box'>
             <div className='search-relation-card'>
@@ -63,7 +93,15 @@ export default function Search() {
           </div>  
         </div>
         <div className='search-pagination-box'>
-          {count !==0 && {/*<Pagination />*/}}
+          {count !==0 && 
+          <Pagination
+            currentPage={currentPage}
+            currentSection={currentSection}
+            setCurrentPage={setCurrentPage}
+            setCurrentSection={setCurrentSection}
+            viewPageList={viewPageList}
+            totalSection={totalSection} 
+          />}
           
         </div>
       </div>
