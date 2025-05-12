@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jino.board_back.domain.search.dto.response.GetPopularListResponseDto;
+import com.jino.board_back.domain.search.dto.response.GetRelationListResponseDto;
 import com.jino.board_back.domain.search.repository.SearchLogRepository;
 import com.jino.board_back.domain.search.repository.resultSet.GetPopularListResultSet;
+import com.jino.board_back.domain.search.repository.resultSet.GetRelationListResultSet;
 import com.jino.board_back.domain.search.service.SearchService;
 import com.jino.board_back.global.dto.response.ResponseDto;
 
@@ -35,5 +37,22 @@ public class SearchServiceImplement implements SearchService {
         }
 
         return GetPopularListResponseDto.success(resultSets);
+    }
+
+    @Override
+    public ResponseEntity<? super GetRelationListResponseDto> getRelationList(String searchWord) {
+
+        List<GetRelationListResultSet> resultSets = new ArrayList<>();
+
+        try {
+
+            resultSets = searchLogRepository.getRelationList(searchWord);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetRelationListResponseDto.success();
     }
 }

@@ -23,7 +23,7 @@ public class GetPopularListResponseDto extends ResponseDto {
 
         List<String> popularWordList = new ArrayList<>();
         for (GetPopularListResultSet resultSet : resultSets) {
-            String popularWord = resultSet.getSerachWord();
+            String popularWord = resultSet.getSearchWord();
             popularWordList.add(popularWord);
         }
 

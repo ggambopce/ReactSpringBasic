@@ -13,6 +13,7 @@ import com.jino.board_back.domain.board.dto.request.PostBoardRequestDto;
 import com.jino.board_back.domain.board.dto.response.DeleteBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetLatestBoardListResponseDto;
+import com.jino.board_back.domain.board.dto.response.GetSearchBoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetTop3BoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PatchBoardResponseDto;
@@ -52,6 +53,15 @@ public class BoardController {
     @GetMapping("/top-3")
     public ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList() {
         ResponseEntity<? super GetTop3BoardListResponseDto> response = boardService.getTop3BoardList();
+        return response;
+    }
+
+    @GetMapping(value = { "/search-list/{searchWord}", "/search-list/{searchWord}/{preSearchWord}" })
+    public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(
+            @PathVariable("searchWord") String searchWord,
+            @PathVariable(value = "preSearchWord", required = false) String preSearchWord) {
+        ResponseEntity<? super GetSearchBoardListResponseDto> response = boardService.getSearchBoadList(searchWord,
+                preSearchWord);
         return response;
     }
 
