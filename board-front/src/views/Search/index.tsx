@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './style.css'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { BoardListItemType } from 'types/interface';
 import { latesBoardListMock } from 'mocks';
 import BoardListItem from 'components/boardListItem';
+import { SEARCH_PATH } from 'constant';
+import Pagination from 'components/pagination';
 
 //          component: 검색 화면 컴포넌트           //
 export default function Search() {
@@ -15,11 +17,21 @@ export default function Search() {
   const [count, setCount] = useState<number>(2)
   //          state: 검색 게시물 리스트 상태 (임시)          //
   const [searchBoardList, setSearchBoardList] = useState<BoardListItemType[]>([]);
+  //          state: 관련 검색어 리스트 상태          //
+  const [relationList, setRelationList] = useState<string[]>([]);
+
+  //          function: 네비게이트 함수          //
+  const navigator = useNavigate();
+
+  //          event handler: 연관 검색어 클릭 이벤트 처리          //
+  const onRelationWordClickHandler = (word: string) => {
+    navigator(SEARCH_PATH(word));
+  }
 
   //          effect: 첫 마운트 시 실행될 함수          //
   useEffect(() => {
     setSearchBoardList(latesBoardListMock);
-  }, []);
+  }, [searchWord]);
 
   //          render: 검색 화면 컴포넌트 렌더링           //
   if (!searchWord) return (<></>)
@@ -38,16 +50,22 @@ export default function Search() {
           <div className='search-relation-box'>
             <div className='dearch-relation-card'>
               <div className='search-relation-card-container'>
-               <div className='search-relation-card-title'></div>
+               <div className='search-relation-card-title'></div> 
+               {relationList.length === 0 ? 
+               <div className='search-relation-card-contents-nothing'></div> :  
                <div className='search-erlation-card-contents'>
-
+               {relationList.map(word => <div className='word-badge' onClick={() => onRelationWordClickHandler(word)}>{word}</div>)}
                </div>
+               }
               </div>
             </div>  
           </div>  
         </div>
-        <div className='search-pagination-box'></div>
+        <div className='search-pagination-box'>
+          {/*<Pagination />*/}
+        </div>
       </div>
     </div>
   )
 }
+ 
