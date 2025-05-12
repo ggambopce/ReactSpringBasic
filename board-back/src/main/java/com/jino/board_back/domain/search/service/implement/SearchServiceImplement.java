@@ -53,6 +53,6 @@ public class SearchServiceImplement implements SearchService {
             return ResponseDto.databaseError();
         }
 
-        return GetRelationListResponseDto.success();
+        return GetRelationListResponseDto.success(resultSets);
     }
 }
