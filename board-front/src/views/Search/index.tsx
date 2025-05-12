@@ -4,11 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { BoardListItemType } from 'types/interface';
 import BoardListItem from 'components/boardListItem';
 import { SEARCH_PATH } from 'constant';
-import { getSearchBoardListRequest } from 'apis';
+import { getRelationListRequest, getSearchBoardListRequest } from 'apis';
 import { ResponseDto } from 'apis/response';
 import GetSearchBoardListResponseDto from 'apis/response/board/get-search-board-response.dto';
 import { usePagination } from 'hooks';
 import Pagination from 'components/pagination';
+import { GetRelationListResponseDto } from 'apis/response/search';
 
 //          component: 검색 화면 컴포넌트           //
 export default function Search() {
@@ -34,7 +35,7 @@ export default function Search() {
   //          state: 검색 게시물 리스트 상태 (임시)          //
   const [searchBoardList, setSearchBoardList] = useState<BoardListItemType[]>([]);
   //          state: 관련 검색어 리스트 상태          //
-  const [relationList, setRelationList] = useState<string[]>([]);
+  const [relativeWordList, setRelationWordList] = useState<string[]>([]);
 
   //          function: 네비게이트 함수          //
   const navigator = useNavigate();
@@ -52,16 +53,27 @@ export default function Search() {
     setPreSearchWord(searchWord);
   }
 
+  //          function: get relation list response 처리 함수          //
+  const getRelationListResponse = (responseBody: GetRelationListResponseDto | ResponseDto | null) => {
+    if (!responseBody) return;
+    const {code} = responseBody;
+    if (code === 'DBE') alert('데이터베이스 오류입니다.');
+    if (code !== 'SU') return;
+
+    const { relativeWordList } = responseBody as GetRelationListResponseDto;
+    setRelationWordList(relativeWordList);
+  }
+
   //          event handler: 연관 검색어 클릭 이벤트 처리          //
   const onRelationWordClickHandler = (word: string) => {
     navigator(SEARCH_PATH(word));
   }
 
-  //          effect: 첫 마운트 시 실행될 함수          //
+  //          effect: search word 상태 변경 시 실행될 함수          //
   useEffect(() => {
-    
     if (!searchWord) return;
-    getSearchBoardListRequest(searchWord, preSearchWord).then(getSearchBoardListResponse)
+    getSearchBoardListRequest(searchWord, preSearchWord).then(getSearchBoardListResponse);
+    getRelationListRequest(searchWord).then(getRelationListResponse);
   }, [searchWord]);
 
   //          render: 검색 화면 컴포넌트 렌더링           //
@@ -82,10 +94,10 @@ export default function Search() {
             <div className='search-relation-card'>
               <div className='search-relation-card-container'>
                <div className='search-relation-card-title'>{'관련 검색어'}</div> 
-               {relationList.length === 0 ? 
+               {relativeWordList.length === 0 ? 
                <div className='search-relation-card-contents-nothing'>{'관련 검색어가 없습니다.'}</div> :  
                <div className='search-erlation-card-contents'>
-               {relationList.map(word => <div className='word-badge' onClick={() => onRelationWordClickHandler(word)}>{word}</div>)}
+               {relativeWordList.map(word => <div className='word-badge' onClick={() => onRelationWordClickHandler(word)}>{word}</div>)}
                </div>
                }
               </div>
