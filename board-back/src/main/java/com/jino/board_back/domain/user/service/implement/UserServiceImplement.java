@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jino.board_back.domain.user.dto.response.GetSignInUserResponseDto;
+import com.jino.board_back.domain.user.dto.response.GetUserResponseDto;
 import com.jino.board_back.domain.user.entity.UserEntity;
 import com.jino.board_back.domain.user.repository.UserRepository;
 import com.jino.board_back.domain.user.service.UserService;
@@ -33,6 +34,23 @@ public class UserServiceImplement implements UserService {
         }
 
         return GetSignInUserResponseDto.success(userEntity);
+    }
+
+    @Override
+    public ResponseEntity<? super GetUserResponseDto> getUser(String email) {
+        UserEntity userEntity = null;
+        try {
+
+            userEntity = userRepository.findByEmail(email);
+            if (userEntity == null)
+                return GetUserResponseDto.notExistUser();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetUserResponseDto.success(userEntity);
     }
 
 }
