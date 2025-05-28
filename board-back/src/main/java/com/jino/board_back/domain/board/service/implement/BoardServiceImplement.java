@@ -276,7 +276,7 @@ public class BoardServiceImplement implements BoardService {
     }
 
     @Override
-    public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoadList(String searchWord,
+    public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(String searchWord,
             String preSearchWord) {
 
         List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();

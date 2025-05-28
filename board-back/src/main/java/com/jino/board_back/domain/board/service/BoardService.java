@@ -28,7 +28,7 @@ public interface BoardService {
 
     ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList();
 
-    ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoadList(String searchWord, String preSearchWord);
+    ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(String searchWord, String preSearchWord);
 
     ResponseEntity<? super PutFavoriteResponseDto> putFavorite(Integer boardNumber, String email);
 

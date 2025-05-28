@@ -60,7 +60,7 @@ public class BoardController {
     public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(
             @PathVariable("searchWord") String searchWord,
             @PathVariable(value = "preSearchWord", required = false) String preSearchWord) {
-        ResponseEntity<? super GetSearchBoardListResponseDto> response = boardService.getSearchBoadList(searchWord,
+        ResponseEntity<? super GetSearchBoardListResponseDto> response = boardService.getSearchBoardList(searchWord,
                 preSearchWord);
         return response;
     }
