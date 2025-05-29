@@ -27,7 +27,7 @@ public class UserController {
 
     }
 
-    @GetMapping("email")
+    @GetMapping("/email")
     public ResponseEntity<? super GetUserResponseDto> getUser(@AuthenticationPrincipal String email) {
 
         ResponseEntity<? super GetUserResponseDto> response = userService.getUser(email);
