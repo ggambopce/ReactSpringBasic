@@ -304,7 +304,7 @@ public class BoardServiceImplement implements BoardService {
     }
 
     @Override
-    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoard(String email) {
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String email) {
 
         List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
 

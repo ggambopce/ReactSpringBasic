@@ -22,7 +22,7 @@ public interface BoardService {
 
     ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber);
 
-    ResponseEntity<? super GetUserBoardListResponseDto> getUserBoard(String email);
+    ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String email);
 
     ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber,
             String email);

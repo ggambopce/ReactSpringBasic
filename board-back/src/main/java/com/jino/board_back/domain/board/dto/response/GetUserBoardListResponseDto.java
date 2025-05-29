@@ -18,7 +18,7 @@ public class GetUserBoardListResponseDto extends ResponseDto {
 
     private List<BoardListViewEntity> userBoardListItems;
 
-    private GetUserBoardListResponseDto(List<BoardListItem> boardListViewEntities) {
+    private GetUserBoardListResponseDto(List<BoardListViewEntity> boardListViewEntities) {
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
     }
 

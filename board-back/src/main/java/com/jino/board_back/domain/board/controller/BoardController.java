@@ -15,6 +15,7 @@ import com.jino.board_back.domain.board.dto.response.GetBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetLatestBoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetSearchBoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.GetTop3BoardListResponseDto;
+import com.jino.board_back.domain.board.dto.response.GetUserBoardListResponseDto;
 import com.jino.board_back.domain.board.dto.response.IncreaseViewCountResponsDto;
 import com.jino.board_back.domain.board.dto.response.PatchBoardResponseDto;
 import com.jino.board_back.domain.board.dto.response.PostBoardResponseDto;
@@ -107,6 +108,12 @@ public class BoardController {
     public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(
             @PathVariable("boardNumber") Integer boardNumber, @AuthenticationPrincipal String email) {
         ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(boardNumber, email);
+        return response;
+    }
+
+    @GetMapping("/user-board-list}")
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(@PathVariable("email") String email) {
+        ResponseEntity<? super GetUserBoardListResponseDto> response = boardService.getUserBoardList(email);
         return response;
     }
 
